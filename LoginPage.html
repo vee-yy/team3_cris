@@ -24,4 +24,53 @@
     </div>
 
 </body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="LoginPage.css">
+    <title>Login Page</title>
+</head>
+<body>
+    <header>
+    </header>
+    <div class="form-box">
+   <div class="form-box" id="signupBox">
+    <form class="form" id="signupForm">
+      <span class="title">Sign up</span>
+      <span class="subtitle">Create a free account with your email.</span>
+      <div class="form-container">
+        <input type="text" class="input" placeholder="Full Name" required />
+        <input type="email" class="input" placeholder="Email" required />
+        <input type="password" class="input" placeholder="Password" required />
+      </div>
+      <button type="button" onclick="SignUp()">Sign up</button>
+    </form>
+    <div class="form-section">
+      <p>Have an account? <a href="#" onclick="toggleForms()">Log in</a></p>
+    </div>
+  </div>
+
+  <div class="form-box" id="loginBox" style="display: none;">
+    <form class="form" id="loginForm">
+      <span class="title">Log in</span>
+      <span class="subtitle">Welcome back! Please log in.</span>
+      <div class="form-container">
+        <input type="email" class="input" placeholder="Email" required />
+        <input type="password" class="input" placeholder="Password" required />
+      </div>
+      <button type="button" onclick="LogIn()">Log in</button>
+    </form>
+    <div class="form-section">
+      <p>
+        Don't have an account? 
+        <a href="#" class="highlighted-link" onclick="toggleForms()">Sign up</a>
+      </p>
+    </div>
+  </div>
+      
+      <script src="LoginPage.js"></script>      
+
+</body>
 </html>
