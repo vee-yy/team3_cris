@@ -10,13 +10,13 @@ body {
 .form-box {
   max-width: 400px;       
   background: #e6ecf2;
-  overflow: hidden;
   border-radius: 16px;
+  overflow: hidden;
   color: #010101;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .form {
-  position: relative;
   display: flex;
   flex-direction: column;
   padding: 32px 24px 24px;
@@ -58,17 +58,19 @@ body {
   font-size: .85rem;
   background-color: #e0ecfb;
   box-shadow: rgb(0 0 0 / 8%) 0 -1px;
+  border-top: 1px solid #c8d8eb;
 }
 
-.form-section a {
-  font-weight: bold;
+.form-section button {
+  background: none;
+  border: none;
   color: #0066ff;
-  transition: color .3s ease;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-.form-section a:hover {
-  color: #005ce6;
-  text-decoration: underline;
+.form-section button:hover {
+  text-decoration: none;
 }
 
 .form button {
