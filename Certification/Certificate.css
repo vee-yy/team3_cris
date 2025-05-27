@@ -6,17 +6,21 @@
 }
 
 body{
-    background: linear-gradient(90deg, #F0F2F0, #000C40);
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding-bottom: 45vh;
 }
 /* HEADER - START */
 .head {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #F0F2F0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     transition: 0.5s ease;
     padding: 10px 20px;
     min-height: 80px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
 .header-right{
@@ -107,6 +111,15 @@ body{
 
 /* HEADER - END */
 
+.title {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.title p{
+    margin-top: 10px;
+    color: slategrey;
+}
 
 .card-container{
     display: flex;
@@ -114,11 +127,12 @@ body{
     flex-wrap: wrap;
     justify-content: space-evenly;
     margin-top: 100px;
+    margin-bottom: 200px;
 }
 
 .card{
     width: 400px;
-    height: 400px;
+    height: 300px;
     background-color: #f0f0f0;
     border-radius: 10px;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.3);
@@ -129,10 +143,9 @@ body{
     margin-bottom: 30px;
 }
 
-.card:hover{
+.card:hover {
     transform: translateY(-10px);
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.3);
-    background: linear-gradient(90deg, #abbaab, #ffffff);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .card-content{
@@ -151,18 +164,110 @@ body{
     color: #666;
 }
 
-.read-more{
-    font-size: 16px;
-    text-decoration: none;
-    color: #007BFF;
-    font-weight: bold;
-    margin-top: 150px;
-    display: inline-block;
+.icon-badge {
+  background-color: #f3e8ff;
+  padding: 0.75rem;
+  border-radius: 9999px;
+  margin-right: 1rem;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
 }
 
-.read-more:hover{
-    color: red;
+
+.icon-blue {
+  color: #2563eb;
+  font-size: 1.25rem;
 }
+
+.icon-purple {
+  color: #d11f1f;
+  font-size: 1.25rem;
+}
+
+.icon-red {
+  color: #fcfcfc; 
+  font-size: 1.25rem;
+}
+
+.icon-green {
+  color: #16a34a;
+  font-size: 1.25rem;
+}
+
+.icon-gray {
+  color: #6b7280; 
+  font-size: 1.25rem;
+}
+
+.icon-yellow{
+    color: #f9c34e;
+}
+
+.icon-badge.birth {
+  background-color: #bfdbfe;
+}
+
+.icon-badge.marriage {
+  background-color: #fecaca; 
+}
+
+.icon-badge.death {
+  background-color: #433939;
+}
+
+.icon-badge.cenomar {
+  background-color: #bbf7d0; 
+}
+
+.icon-badge.cenodeath {
+  background-color: #d1d5db; 
+}
+
+.icon-badge.other {
+  background-color: #d5d87f; 
+}
+
+.header-with-icon {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.header-with-icon h2 {
+  font-size: 1.5rem;
+  color: #000;
+}
+
+
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 90px;
+}
+
+.read-more {
+  font-size: 16px;
+  text-decoration: none;
+  color: #007BFF;
+  font-weight: bold;
+  display: inline-block;
+}
+
+.read-more:hover {
+  color: red;
+}
+
+.courier {
+  background-color: #fce7f3;
+  color: #9d174d;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  border-radius: 9999px;
+  display: inline-block;
+}
+
 
 .popup-overlay {
     position: fixed;
@@ -222,6 +327,69 @@ body{
     cursor: pointer;
     font-weight: bold;
 }
+
+  /* Progress Bar Container */
+  .progressbar {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    counter-reset: step;
+  }
+  .progressbar li {
+    list-style-type: none;
+    width: 100%;
+    position: relative;
+    text-align: center;
+    font-size: 12px;
+    color: gray;
+    cursor: pointer;
+  }
+  .progressbar li:before {
+    content: counter(step);
+    counter-increment: step;
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    border: 2px solid gray;
+    display: block;
+    text-align: center;
+    margin: 0 auto 8px auto;
+    border-radius: 50%;
+    background-color: white;
+  }
+  .progressbar li:after {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: gray;
+    top: 12px;
+    left: -50%;
+    z-index: -1;
+  }
+  .progressbar li:first-child:after {
+    content: none;
+  }
+  .progressbar li.active {
+    color: #27ae60;
+    font-weight: bold;
+  }
+  .progressbar li.active:before {
+    border-color: #27ae60;
+    background-color: #27ae60;
+    color: white;
+  }
+  .progressbar li.active + li:after {
+    background-color: #27ae60;
+  }
+
+  /* Form Step */
+  .form-step {
+    display: none;
+  }
+  .form-step.active {
+    display: block;
+  }
 
 form input {
     display: block;
@@ -287,4 +455,86 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: content-box;
+}
+
+.table-container {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #ffffff;
+  border-radius: 1rem 1rem 0 0;
+  box-shadow: 0 -6px 15px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+}
+
+.table-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.table-title {
+  font-size: 1.25rem;
+  text-align: center;
+  font-weight: 600;
+  color: #1f2937;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table thead {
+  background-color: #f9fafb;
+}
+.table th {
+  padding: 0.75rem 1.5rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.table td {
+  padding: 0.75rem 1.5rem;
+  font-size: 0.95rem;
+  color: #374151;
+  border-top: 1px solid #e5e7eb;
+}
+
+.status {
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  font-size: 0.75rem;
+  display: inline-block;
+}
+.status.pending {
+  background-color: #fef3c7; 
+  color: #b45309;
+}
+.status.approved {
+  background-color: #d1fae5; 
+  color: #065f46;
+}
+.status.rejected {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+.action-btn {
+  background-color: #2563eb; 
+  color: white;
+  padding: 0.4rem 0.75rem;
+  border-radius: 0.375rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+.action-btn:hover {
+  background-color: #1d4ed8;
 }
