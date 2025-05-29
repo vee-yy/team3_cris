@@ -1,5 +1,5 @@
 function SignUp() {
-    window.location.href = "../Certification/certificate.html";
+    window.location.href = "Certification/certificate.html";
 }
 function SignUp() {
   const form = document.getElementById('signupForm');
@@ -17,11 +17,11 @@ function SignUp() {
     return;
   }
 
-  window.location.href = "../Certification/certificate.html";
+    window.location.href = "Certification/certificate.html";
 }
 
 function LogIn() {
-    window.location.href = "../Certification/certificate.html";
+    window.location.href = "Certification/certificate.html";
 }
 function LogIn() {
   const form = document.getElementById('loginForm');
@@ -38,7 +38,7 @@ function LogIn() {
     return;
   }
 
-  window.location.href = "../Certification/certificate.html";
+    window.location.href = "Certification/certificate.html";
 }
 
 
