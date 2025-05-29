@@ -8,6 +8,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="Certificate.css">
 </head>
 <body>
@@ -15,9 +16,9 @@
 <header class="head">
     <div class="header-right">
         <nav class="nav-links">
-            <a href="#" data-translate="home" onclick="openSignPopup()">Home</a>
-            <a href="#" data-translate="aboutus" onclick="openLoginPopup()">About Us</a>
-            <a href="#" data-translate="contactus" onclick="openContactusPopup()">Contact Us</a>
+            <a href="#" data-translate="home" onclick="openHomePopup()">Home</a>
+            <a href="#" data-translate="aboutus" onclick="openAboutPopup()">About Us</a>
+            <a href="#" data-translate="contactus" onclick="openContactPopup()">Contact Us</a>
         </nav>
     </div>
 
@@ -75,7 +76,9 @@
             <p>Register or request a copy of a birth certificate for official identification, school enrollment, and other legal purposes.</p>
             <div class="card-footer">
                 <a href="#" class="read-more">Read More</a>
-                <span class="courier">5-7 days</span>
+                  <span class="courier">
+                    <i class="fas fa-truck icon-birth"></i> 5–7 days
+                  </span>
             </div>
         </div>
     </div>        
@@ -92,8 +95,10 @@
             <p>Register your marriage or request a copy of your marriage certificate for legal, immigration, or personal purposes.</p>
             <div class="card-footer">
                 <a href="#" class="read-more">Read More</a>
-                <span class="courier">5-7 days</span>
-            </div>
+                  <span class="courier">
+                    <i class="fas fa-truck"></i> 5–7 days
+                  </span>            
+                </div>
         </div>
     </div>        
 
@@ -109,8 +114,10 @@
             <p>Request a death certificate for legal proceedings, insurance claims, or other official purposes.</p>
             <div class="card-footer">
                 <a href="#" class="read-more">Read More</a>
-                <span class="courier">5-7 days</span>
-            </div>
+                  <span class="courier">
+                    <i class="fas fa-truck"></i> 5–7 days
+                  </span>            
+                </div>
         </div>
     </div>        
 
@@ -126,8 +133,10 @@
             <p>Certificate of No Marriage Record (CENOMAR) required for marriage license applications and other legal purposes.</p>
             <div class="card-footer">
                 <a href="#" class="read-more">Read More</a>
-                <span class="courier">5-7 days</span>
-            </div>
+                  <span class="courier">
+                    <i class="fas fa-truck"></i> 5–7 days
+                  </span>            
+                </div>
         </div>
     </div>        
 
@@ -143,8 +152,10 @@
             <p>Certificate of No Death Record (CENODEATH) required for legal and inheritance purposes.</p>
             <div class="card-footer">
                 <a href="#" class="read-more">Read More</a>
-                <span class="courier">5-7 days</span>
-            </div>
+                  <span class="courier">
+                    <i class="fas fa-truck"></i> 5–7 days
+                  </span>            
+                </div>
         </div>
     </div>    
     
@@ -160,8 +171,7 @@
             <p>Need another type of certificate or document? Contact our support team for assistance.</p>
             <div class="card-footer">
                 <a href="#" class="read-more">Read More</a>
-                <span class="courier">5-7 days</span>
-            </div>
+              </div>
         </div>
     </div>
 </div>
@@ -174,15 +184,15 @@
       <h2 id="formTitle">Register</h2>
           <!-- Progress Bar -->
     <ul class="progressbar" id="progressbar">
-      <li class="active">Info</li>
-      <li>Upload</li>
+      <li class="active">Information</li>
       <li>Review</li>
     </ul>
 
 <form id="certificateForm">
+<input type="hidden" id="certificateType" name="certificateType" />
 
   <!-- Step 1 -->
-  <div class="form-step" data-step="1">
+  <div class="form-step" data-step="0">
       <!-- Birth Certificate Fields -->
       <div id="birthFields" class="type-fields">
         <label>Name of Child</label>
@@ -198,16 +208,16 @@
 
         <label>Mother's Maiden Name</label>
         <div class="name-group">
-          <input type="text" id="birthMother_MaidenName" name="birthFirstName" placeholder="Mother's First Name" />
-          <input type="text" id="birthLastName" name="birthLastName" placeholder="Mother's Last Name" />
-          <input type="text" id="birthMiddleInitial" name="birthMiddleInitial" placeholder="Mother's Middle Name" />
+          <input type="text" id="birthMotherMaidenName" name="birthMotherMaidenName" placeholder="Mother's First Name" />
+          <input type="text" id="birthMotherLastName" name="birthMotherLastName" placeholder="Mother's Last Name" />
+          <input type="text" id="birthMotherMiddleInitial" name="birthMotherMiddleInitial" placeholder="Mother's Middle Name" />
         </div>
 
         <label>Father's Name</label>
         <div class="name-group">
-          <input type="text" id="FatherstName" name="FatherFirstName" placeholder="Father's First Name" />
-          <input type="text" id="birthLastName" name="birthLastName" placeholder="Father's Last Name" />
-          <input type="text" id="birthMiddleInitial" name="birthMiddleInitial" placeholder="Father's Middle Name" />
+          <input type="text" id="FatherstName" name="FatherstName" placeholder="Father's First Name" />
+          <input type="text" id="birthFatherLastName" name="birthFatherLastName" placeholder="Father's Last Name" />
+          <input type="text" id="birthFatherMiddleInitial" name="birthFatherMiddleInitial" placeholder="Father's Middle Name" />
         </div>
 
         <div class="suffix-container">
@@ -236,16 +246,16 @@
       <div id="marriageFields" class="type-fields">
         <label>Wife's Name</label>
         <div class="name-group">
-          <input type="text" id="marriageWife" name="marriageWife" placeholder="First Name" />
-          <input type="text" id="marriageWife" name="marriageWife" placeholder="Last Name" />
-          <input type="text" id="marriageWife" name="marriageWife" placeholder="Middle Name" />
+          <input type="text" id="marriageWifefirst" name="marriageWifefirst" placeholder="First Name" />
+          <input type="text" id="marriageWifelast" name="marriageWifelast" placeholder="Last Name" />
+          <input type="text" id="marriageWifeMiddle" name="marriageWifeMiddle" placeholder="Middle Name" />
         </div>
 
         <label>Husband's Name</label>
         <div class="name-group">
-          <input type="text" id="marriageHusband" name="marriageHusband" placeholder="First Name" />
-          <input type="text" id="marriageHusband" name="marriageHusband" placeholder="Last Name" />
-          <input type="text" id="marriageHusband" name="marriageHusband" placeholder="Middle Name" />
+          <input type="text" id="marriageHusbandfirst" name="marriageHusbandfirst" placeholder="First Name" />
+          <input type="text" id="marriageHusbandlast" name="marriageHusbandlast" placeholder="Last Name" />
+          <input type="text" id="marriageHusbandmiddle" name="marriageHusbandmiddle" placeholder="Middle Name" />
         </div>
         <div class="suffix-container">
           <input type="text" id="marriageHusbandSuffix" name="marriageHusbandSuffix" maxlength="5" placeholder="Suffix" />
@@ -392,27 +402,20 @@
           <input type="number" id="cenodeathCopiesNeeded" name="cenodeathCopiesNeeded" placeholder="Number of copies needed" />
         </div>
   </div>
+          <button type="button" id="nextBtn" onclick="changeStep(1)">Next</button>
+
   </div>
 
-  <!-- Step 2: Upload -->
-  <div class="form-step" data-step="2">
-    <label>Upload ID</label>
-    <input type="file" name="uploadId" required />
-  </div>
-
-  <!-- Step 3: Review & Submit -->
-  <div class="form-step" data-step="3">
+  <!-- Step 2: Review -->
+  <div class="form-step" data-step="1">
     <h3>Review Your Information</h3>
     <p>Please verify all your data before submitting.</p>
+    <div id="reviewSummary" style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;"></div>
+    <button type="button" id="prevBtn">Previous</button>
+    <button type="button" id="downloadBtn">Download PDF</button>
+    <button type="submit" id="submitBtn">Submit</button>
+</div>
   </div>
-
-  <div style="display:flex; justify-content: space-between; margin-top: 20px;">
-    <button type="button" id="prevBtn" onclick="changeStep(-1)" disabled>Previous</button>
-    <button type="button" id="nextBtn" onclick="changeStep(1)">Next</button>
-      <button type="submit">Submit</button>
-
-  </div>
-
 </form>
     </div>
   </div>

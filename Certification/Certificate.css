@@ -42,13 +42,12 @@ body{
   font-family: 'Plus Jakarta Sans', sans-serif;
   padding: 8px 12px;
   border-radius: 20px;
-  transition: background-color 0.3s;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border-bottom: 2px solid transparent;
+  transition: border-bottom 0.3s ease, color 0.3s ease;
 }
 
 .nav-links a:hover {
-  transform: translateY(-10px);
-  background-color: #abbaab;
+  border: 2px solid #ecf0f1;
 }
 
 .search-tab {
@@ -265,8 +264,11 @@ body{
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
-  display: inline-block;
+  display: inline-flex; /* enables icon + text alignment */
+  align-items: center;
+  gap: 0.25rem; /* spacing between icon and text */
 }
+
 
 
 .popup-overlay {
@@ -392,10 +394,11 @@ body{
 
   /* Form Step */
 
+
 .form-step {
   display: none;
 }
-  
+
 .form-step.active {
   display: block;
 }
@@ -546,12 +549,4 @@ textarea {
 }
 .action-btn:hover {
   background-color: #1d4ed8;
-}
-
-#marriageWife{
-  background-color: #dd3d83;
-}
-
-#marriageHusband{
-  background-color: #5b64ea;
 }

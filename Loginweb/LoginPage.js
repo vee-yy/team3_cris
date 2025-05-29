@@ -1,3 +1,8 @@
+function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
 function SignUp() {
   const form = document.getElementById('signupForm');
   const fullName = form.querySelector('input[type="text"]').value.trim();
@@ -14,8 +19,30 @@ function SignUp() {
     return;
   }
 
-  // Adjust this path exactly as per your project structure & case sensitive
+  if (!isValidEmail(email)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid Email',
+      text: 'Please enter a valid email address.',
+      confirmButtonText: 'OK'
+    });
+    return;
+  }
+
   window.location.href = "../Certification/Certificate.html";
+}
+
+function toggleForms() {
+  const signupBox = document.getElementById("signupBox");
+  const loginBox = document.getElementById("loginBox");
+
+  if (signupBox.style.display === "none") {
+    signupBox.style.display = "block";
+    loginBox.style.display = "none";
+  } else {
+    signupBox.style.display = "none";
+    loginBox.style.display = "block";
+  }
 }
 
 function LogIn() {
@@ -33,19 +60,17 @@ function LogIn() {
     return;
   }
 
-  // Adjust this path exactly as per your project structure & case sensitive
+  if (!isValidEmail(email)) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Invalid Email',
+      text: 'Please enter a valid email address.',
+      confirmButtonText: 'OK'
+    });
+    return;
+  }
+
   window.location.href = "../Certification/Certificate.html";
 }
 
-function toggleForms() {
-  const signupBox = document.getElementById('signupBox');
-  const loginBox = document.getElementById('loginBox');
 
-  if (loginBox.style.display === 'none') {
-    loginBox.style.display = 'block';
-    signupBox.style.display = 'none';
-  } else {
-    loginBox.style.display = 'none';
-    signupBox.style.display = 'block';
-  }
-}
