@@ -1,13 +1,69 @@
-// Search filtering for certificate cards
-const searchInput = document.querySelector('.searchInput');
-const cards = document.querySelectorAll('.card');
+// Functions for searching and filtering cards and table rows
+document.addEventListener('DOMContentLoaded', function () {
+  const searchInput = document.querySelector('.searchInput');
 
-searchInput.addEventListener('input', () => {
-  const query = searchInput.value.toLowerCase();
-  cards.forEach(card => {
-    const text = card.textContent.toLowerCase();
-  });
+  if (searchInput) {
+    searchInput.addEventListener('input', () => {
+    const query = searchInput.value.toLowerCase();
+
+    function highlightText(element, query) {
+      if (!query) {
+          element.innerHTML = element.textContent;
+        return;
+      }
+
+    const text = element.textContent;
+    const regex = new RegExp(`(${query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+
+        element.innerHTML = text.replace(regex, '<mark>$1</mark>');
+  }
+
+// Search & highlight cards
+    const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const cardText = card.innerText.toLowerCase();
+        if (cardText.includes(query)) {
+          card.style.display = 'flex';
+
+ // Highlight matches inside the card's h2 (or you can choose whole card)
+    const title = card.querySelector('h2');
+        if (title) highlightText(title, query);
+        } else {
+        card.style.display = 'none';
+
+// Remove highlights if hidden
+    const title = card.querySelector('h2');
+        if (title) highlightText(title, '');
+        }
+      });
+
+// Search & highlight rows in table
+const rows = document.querySelectorAll('#registrationTableBody tr');
+   rows.forEach(row => {
+const rowText = row.innerText.toLowerCase();
+  if (rowText.includes(query)) {
+    row.style.display = '';
+const nameCell = row.querySelectorAll('td')[1];
+  if (nameCell) {
+      highlightText(nameCell, query);
+   }
+row.querySelectorAll('td').forEach((td, i) => {
+   if (i !== 1) {
+     td.innerHTML = td.textContent;
+     }
+   });
+  } else {
+row.style.display = 'none';
+row.querySelectorAll('td').forEach(td => {
+td.innerHTML = td.textContent;
+          });
+        }
+      });
+    });
+ }
 });
+
+// Function to open the home, about, and contact popups
 
 function openHomePopup() {
   Swal.fire({ icon: 'info', title: 'Home', text: 'This is the Home section.' });
@@ -20,6 +76,8 @@ function openAboutPopup() {
 function openContactPopup() {
   Swal.fire({ icon: 'info', title: 'Contact Us', text: 'This is the Contact Us section.' });
 }
+
+// Function for sweet alert for every card click
 
 function openForm(type) {
   Swal.fire({
@@ -59,6 +117,7 @@ function openForm(type) {
   });
 }
 
+// Function to show the popup form for certificate registration
 function showPopupForm(type) {
   const popup = document.getElementById('popupForm');
   if (!popup) return;
@@ -112,6 +171,7 @@ const sectionMap = {
   'Cenodeath Certificate': 'cenodeathFields'
 };
 
+//Function to reset the form and stepper
 function showStep(step) {
   steps.forEach((el, idx) => {
     el.style.display = idx === step ? 'block' : 'none';
@@ -122,8 +182,8 @@ function showStep(step) {
   downloadBtn.style.display = step === steps.length - 1 ? 'inline-block' : 'none';
 }
 
+// Validate all visible inputs in the active certificate type section
 function validateStep1() {
-  // Validate all visible inputs in the active certificate type section
   const certType = document.getElementById('certificateType').value;
   const sectionId = sectionMap[certType];
   const section = document.getElementById(sectionId);
@@ -145,6 +205,7 @@ function validateStep1() {
   return true;
 }
 
+//Generate the summary of inputs for the selected certificate type and download as PDF basta ayon jusko po
 function generateSummary() {
   const certType = document.getElementById('certificateType').value;
   const sectionId = sectionMap[certType];
@@ -203,13 +264,11 @@ downloadBtn.addEventListener('click', () => {
 form.addEventListener('submit', e => {
   e.preventDefault();
 
-  // Your existing submission logic here (adding row to table etc.)
   const certType = document.getElementById('certificateType').value;
   const sectionId = sectionMap[certType];
   const section = document.getElementById(sectionId);
   if (!section) return;
 
-  // Extract name fields (adjust based on your fields)
   const firstName = section.querySelector('input[placeholder="First Name"]')?.value.trim() || '';
   const lastName = section.querySelector('input[placeholder="Last Name"]')?.value.trim() || '';
   const middleInitial = section.querySelector('input[placeholder="Middle Initial"]')?.value.trim() || '';
@@ -235,19 +294,12 @@ form.addEventListener('submit', e => {
     text: 'We will send you an email of when you will be able to claim your certificate.',
     confirmButtonColor: '#3b82f6'
   }).then(() => {
-    form.reset();
-    currentStep = 0;
-    showStep(currentStep);
+    closeForm();
 
-    // Hide all certificate type fields
-    Object.values(sectionMap).forEach(id => {
-      const sec = document.getElementById(id);
-      if (sec) sec.style.display = 'none';
-    });
   });
 });
 
-// Initialize first step visible on open
+//First AAAAAAAAAAARRGGHHH
 showStep(currentStep);
 
 
@@ -281,55 +333,4 @@ async function downloadPDF() {
   doc.save('registration-summary.pdf');
 }
 
-const certificateForm = document.getElementById('certificateForm');
-if (certificateForm) {
-  certificateForm.addEventListener('submit', function (e) {
-    e.preventDefault();
 
-    const certType = document.getElementById('certificateType').value;
-    const sectionMap = {
-      'Birth Certificate': 'birthFields',
-      'Marriage Certificate': 'marriageFields',
-      'Death Certificate': 'deathFields',
-      'Cenomar Certificate': 'cenomarFields',
-      'Cenodeath Certificate': 'cenodeathFields'
-    };
-    const sectionId = sectionMap[certType];
-    const section = document.getElementById(sectionId);
-    if (!section) return;
-
-    const firstName = section.querySelector('input[placeholder="First Name"]')?.value.trim() || '';
-    const lastName = section.querySelector('input[placeholder="Last Name"]')?.value.trim() || '';
-    const middleInitial = section.querySelector('input[placeholder="Middle Initial"]')?.value.trim() || '';
-    const suffix = section.querySelector('input#suffix')?.value.trim() || '';
-    const fullName = [firstName, middleInitial && middleInitial + '.', lastName, suffix].filter(Boolean).join(' ').trim();
-
-    const tableBody = document.querySelector('#registrationTableBody');
-    if (!tableBody) return;
-
-    const newRow = document.createElement('tr');
-    newRow.innerHTML = `
-      <td>${Date.now()}</td>
-      <td>${fullName}</td>
-      <td>${certType}</td>
-      <td>Pending</td>
-    `;
-    tableBody.appendChild(newRow);
-
-    Swal.fire({
-      icon: 'success',
-      title: 'Thank you for your cooperation!',
-      text: 'We will send you an email of when you will be able to claim your certificate.',
-      confirmButtonColor: '#3b82f6'
-    }).then(() => {
-      closeForm();
-    });
-  });
-}
-
-const popupForm = document.getElementById('popupForm');
-if (popupForm) {
-  popupForm.addEventListener('click', function (e) {
-    if (e.target === this) closeForm();
-  });
-}

@@ -195,7 +195,8 @@
   <div class="form-step" data-step="0">
       <!-- Birth Certificate Fields -->
       <div id="birthFields" class="type-fields">
-        <label>Name of Child</label>
+        <div class="user">
+        <label id="info">Child's Information</label>
         <div class="name-group">
           <input type="text" id="birthFirstName" name="birthFirstName" placeholder="First Name" />
           <input type="text" id="birthLastName" name="birthLastName" placeholder="Last Name" />
@@ -206,6 +207,40 @@
           <input type="text" id="birthSuffix" name="birthSuffix" maxlength="5" placeholder="Suffix" />
         </div>
 
+       <div class="input-row">
+       <div class="input-group">
+          <label for="birthDateOfBirth">Date of Birth</label>
+          <input type="date" id="birthDateOfBirth" name="birthDateOfBirth" />
+       </div>
+       <div class="input-group">
+           <label for="birthPlaceOfBirth">Place of Birth</label>
+           <input type="text" id="birthPlaceOfBirth" name="birthPlaceOfBirth" placeholder="Street, Barangay, City, Province" />
+        </div>
+        </div>
+
+        <div class="input-row">
+        <div class="input-group">
+           <label for="birthOrientation">Sexual Orientation</label>
+           <select name="birthOrientation" id="birthOrientation">
+             <option value="male">Male</option>
+             <option value="female">Female</option>
+             <option value="non-binary">Non-Binary</option>
+           </select>
+        </div>
+        <div class="input-group">
+           <label for="birthNationality">Nationality</label>
+            <select name="birthNationality" id="birthNationality">
+             <option value="fil">Filipino</option>
+             <option value="foreign">Foreigner</option>
+           </select>
+        </div>
+        </div>
+        </div>
+
+        <div class="parent">
+        <label id="info">Parent's Information</label>
+        <br>
+        <br>
         <label>Mother's Maiden Name</label>
         <div class="name-group">
           <input type="text" id="birthMotherMaidenName" name="birthMotherMaidenName" placeholder="Mother's First Name" />
@@ -220,23 +255,23 @@
           <input type="text" id="birthFatherMiddleInitial" name="birthFatherMiddleInitial" placeholder="Father's Middle Name" />
         </div>
 
+        <label>Suffix (If any)</label>
         <div class="suffix-container">
-          <input type="text" id="birthSuffix" name="birthSuffix" maxlength="5" placeholder="Suffix" />
+          <input type="text" id="birthSuffix" name="birthSuffix" maxlength="5" placeholder="Jr. Sr. III, IV" />
+        </div>
         </div>
 
-        <label for="birthDateOfBirth">Date of Birth</label>
-        <input type="date" id="birthDateOfBirth" name="birthDateOfBirth" placeholder="Date of Birth" />
-
-        <label for="birthPlaceOfBirth">Place of Birth</label>
-        <input type="text" id="birthPlaceOfBirth" name="birthPlaceOfBirth" placeholder="Place of Birth" />
-
-        <label for="birthCompleteAddress">Complete Address</label>
-        <input type="text" id="birthCompleteAddress" name="birthCompleteAddress" placeholder="Complete Address" />
-
-        <label for="birthPurpose">Purpose of the certification</label>
-        <textarea id="birthPurpose" name="birthPurpose" placeholder="Purpose of the certification"></textarea>
-
-        <label for="birthCopiesNeeded">Number of copies needed</label>
+        <label for="birthPurpose">Purpose of the certification</label><br>
+        <select name="birthPurpose" id="birthPurpose">
+          <option value="death_record">-- Select -- </option>
+          <option value="death_record">Proof of No Death Record</option>
+          <option value="lap">Legal and Administrative Purposes</option>
+          <option value="dpas">Demonstrating Potential Alive Status</option>
+          <option value="others">Others</option>
+        </select>
+        <br>
+        <br>
+        <label for="birthCopiesNeeded">Number of copies needed</label><br>
         <div class="suffix-container">
           <input type="number" id="birthCopiesNeeded" name="birthCopiesNeeded" placeholder="Number of copies needed" />
         </div>
@@ -244,6 +279,8 @@
 
       <!-- Marriage Certificate Fields -->
       <div id="marriageFields" class="type-fields">
+      <div class="user">
+        <label id="info"> Couple's Information </label><br><br>
         <label>Wife's Name</label>
         <div class="name-group">
           <input type="text" id="marriageWifefirst" name="marriageWifefirst" placeholder="First Name" />
@@ -257,23 +294,55 @@
           <input type="text" id="marriageHusbandlast" name="marriageHusbandlast" placeholder="Last Name" />
           <input type="text" id="marriageHusbandmiddle" name="marriageHusbandmiddle" placeholder="Middle Name" />
         </div>
+
+        <label>Suffix (if any) </label>
         <div class="suffix-container">
-          <input type="text" id="marriageHusbandSuffix" name="marriageHusbandSuffix" maxlength="5" placeholder="Suffix" />
+          <input type="text" id="birthSuffix" name="birthSuffix" maxlength="5" placeholder="Jr. Sr. III, IV" />
         </div>
 
-        <label for="marriageDateOfMarriage">Date of Marriage</label>
-        <input type="date" id="marriageDateOfMarriage" name="marriageDateOfMarriage" placeholder="Date of Marriage" />
+       <div class="input-row">
+       <div class="input-group">
+          <label for="marriageDateOfMarriage">Date of Marriage</label>
+          <input type="date" id="marriageDateOfMarriage" name="marriageDateOfMarriage" />
+       </div>
 
-        <label for="marriagePlaceOfMarriage">Place of Marriage</label>
-        <input type="text" id="marriagePlaceOfMarriage" name="marriagePlaceOfMarriage" placeholder="Place of Marriage" />
+       <div class="input-group">
+           <label for="marriagePlaceOfMarriage">Place of Marriage</label>
+           <input type="text" id="marriagePlaceOfMarriage" name="marriagePlaceOfMarriage" placeholder="Street, Barangay, City, Province" />
+        </div>
+        </div>
 
-        <label for="marriageCompleteAddress">Complete Address</label>
-        <input type="text" id="marriageCompleteAddress" name="marriageCompleteAddress" placeholder="Complete Address" />
+        <div class="input-row">
+        <div class="input-group">
+           <label for="marriageNationality">Wife's Nationality</label>
+            <select name="marriageNationality" id="marriageNationality">
+             <option value="fil">Filipino</option>
+             <option value="foreign">Foreigner</option>
+           </select>
+        </div>
 
-        <label for="marriagePurpose">Purpose of the certification</label>
-        <textarea id="marriagePurpose" name="marriagePurpose" placeholder="Purpose of the certification"></textarea>
+           <div class="input-group">
+          <label for="marriageNationality">Husband's Nationality</label>
+            <select name="marriageNationality" id="marriageNationality">
+             <option value="fil">Filipino</option>
+             <option value="foreign">Foreigner</option>
+           </select>
+        </div>
+        </div>
+        </div>
+        
+        <label for="birthPurpose">Purpose of the certification</label><br>
+        <select name="birthPurpose" id="birthPurpose">
+          <option value="death_record">-- Select -- </option>
+          <option value="death_record">Proof of No Death Record</option>
+          <option value="lap">Legal and Administrative Purposes</option>
+          <option value="dpas">Demonstrating Potential Alive Status</option>
+          <option value="others">Others</option>
+        </select>
+        <br>
+        <br>
 
-        <label for="marriageCopiesNeeded">Number of copies needed</label>
+        <label for="marriageCopiesNeeded">Number of copies needed</label><br>
         <div class="suffix-container">
           <input type="number" id="marriageCopiesNeeded" name="marriageCopiesNeeded" placeholder="Number of copies needed" />
         </div>
@@ -281,27 +350,59 @@
 
       <!-- Death Certificate Fields -->
       <div id="deathFields" class="type-fields">
-        <label>Name of Deceased</label>
+      <div class="user">
+        <label id="info"> Deceased Information </label><br><br>
         <div class="name-group">
           <input type="text" id="deathFirstName" name="deathFirstName" placeholder="First Name" />
           <input type="text" id="deathLastName" name="deathLastName" placeholder="Last Name" />
           <input type="text" id="deathMiddleInitial" name="deathMiddleInitial" placeholder="Middle Name" />
         </div>
         <div class="suffix-container">
-          <input type="text" id="deathSuffix" name="deathSuffix" maxlength="5" placeholder="Suffix" />
+          <label> Suffix (If any)</label>
+          <input type="text" id="deathSuffix" name="deathSuffix" maxlength="5" placeholder="Jr. Sr. III, IV" />
         </div>
 
-        <label for="deathDateOfDeath">Date of Death</label>
-        <input type="date" id="deathDateOfDeath" name="deathDateOfDeath" placeholder="Date of Death" />
+       <div class="input-row">
+       <div class="input-group">
+          <label for="birthofdeath">Date of Birth</label>
+          <input type="date" id="deathDateOfDeath" name="deathDateOfDeath" />
+          <label for="deathDateOfDeath">Date of Death</label>
+          <input type="date" id="birthofdeath" name="birthofdeath" />
+       </div>
 
-        <label for="deathPlaceOfDeath">Place of Death</label>
-        <input type="text" id="deathPlaceOfDeath" name="deathPlaceOfDeath" placeholder="Place of Death" />
+        <div class="input-row">
+        <div class="input-group">
+           <label for="birthOrientation">Sexual Orientation</label>
+           <select name="birthOrientation" id="birthOrientation">
+             <option value="male">Male</option>
+             <option value="female">Female</option>
+             <option value="non-binary">Non-Binary</option>
+           </select>
+        </div>
+        <div class="input-group">
+           <label for="birthNationality">Nationality</label>
+            <select name="birthNationality" id="birthNationality">
+             <option value="fil">Filipino</option>
+             <option value="foreign">Foreigner</option>
+           </select>
+        </div>
+        </div>
+        </div>
+      </div>
 
-        <label for="deathPlaceOfMarriage">Place of Marriage</label>
-        <input type="text" id="deathPlaceOfMarriage" name="deathPlaceOfMarriage" placeholder="Place of Marriage" />
+        <label for="deathCompleteAddress">Place of Death</label>
+        <input type="text" id="deathCompleteAddress" name="deathCompleteAddress" placeholder="(e.g. Medical Hospital)" />
 
-        <label for="deathCompleteAddress">Complete Address</label>
-        <input type="text" id="deathCompleteAddress" name="deathCompleteAddress" placeholder="Complete Address" />
+        <label for="birthPurpose">Purpose of the certification</label><br>
+        <select name="birthPurpose" id="birthPurpose">
+          <option value="death_record">-- Select -- </option>
+          <option value="death_record">Proof of No Death Record</option>
+          <option value="lap">Legal and Administrative Purposes</option>
+          <option value="dpas">Demonstrating Potential Alive Status</option>
+          <option value="others">Others</option>
+        </select>
+        <br>
+        <br>
 
         <label for="deathCopiesNeeded">Number of copies needed</label>
         <div class="suffix-container">
@@ -311,6 +412,8 @@
 
       <!-- Cenomar Certificate Fields -->
       <div id="cenomarFields" class="type-fields">
+        <div class="user">
+        <label id="info"> Child's Information </label><br><br>
         <label>Child's Name</label>
         <div class="name-group">
           <input type="text" id="cenomarChildFirstName" name="cenomarChildFirstName" placeholder="First Name" />
@@ -321,6 +424,38 @@
           <input type="text" id="cenomarChildSuffix" name="cenomarChildSuffix" maxlength="5" placeholder="Suffix" />
         </div>
 
+      <div class="input-row">
+       <div class="input-group">
+          <label for="cenomarDateOfBirth">Date of Birth</label>
+          <input type="date" id="cenomarDateOfBirth" name="cenomarDateOfBirth" />
+       </div>
+       <div class="input-group">
+           <label for="cenomarPlaceOfBirth">Place of Birth</label>
+           <input type="text" id="cenomarPlaceOfBirth" name="cenomarPlaceOfBirth" placeholder="Street, Barangay, City, Province" />
+        </div>
+        </div>
+
+        <div class="input-row">
+        <div class="input-group">
+           <label for="birthOrientation">Sexual Orientation</label>
+           <select name="birthOrientation" id="birthOrientation">
+             <option value="male">Male</option>
+             <option value="female">Female</option>
+             <option value="non-binary">Non-Binary</option>
+           </select>
+        </div>
+        <div class="input-group">
+           <label for="birthNationality">Nationality</label>
+            <select name="birthNationality" id="birthNationality">
+             <option value="fil">Filipino</option>
+             <option value="foreign">Foreigner</option>
+           </select>
+        </div>
+        </div>
+        </div>
+
+        <div class="parent">
+        <label id="info">Parent's Information</label>
         <label>Mother's Maiden Name</label>
         <div class="name-group">
           <input type="text" id="cenomarMotherFirstName" name="cenomarMotherFirstName" placeholder="First Name" />
@@ -337,18 +472,21 @@
         <div class="suffix-container">
           <input type="text" id="cenomarFatherSuffix" name="cenomarFatherSuffix" maxlength="5" placeholder="Suffix" />
         </div>
-
-        <label for="cenomarDateOfBirth">Date of Birth</label>
-        <input type="date" id="cenomarDateOfBirth" name="cenomarDateOfBirth" placeholder="Date of Birth" />
-
-        <label for="cenomarPlaceOfBirth">Place of Birth</label>
-        <input type="text" id="cenomarPlaceOfBirth" name="cenomarPlaceOfBirth" placeholder="Place of Birth" />
+        </div>
 
         <label for="cenomarCompleteAddress">Complete Address</label>
         <input type="text" id="cenomarCompleteAddress" name="cenomarCompleteAddress" placeholder="Complete Address" />
 
-        <label for="cenomarPurpose">Purpose of the certification</label>
-        <textarea id="cenomarPurpose" name="cenomarPurpose" placeholder="Purpose of the certification"></textarea>
+        <label for="birthPurpose">Purpose of the certification</label><br>
+        <select name="birthPurpose" id="birthPurpose">
+          <option value="death_record">-- Select -- </option>
+          <option value="death_record">Proof of No Death Record</option>
+          <option value="lap">Legal and Administrative Purposes</option>
+          <option value="dpas">Demonstrating Potential Alive Status</option>
+          <option value="others">Others</option>
+        </select>
+        <br>
+        <br>
 
         <label for="cenomarCopiesNeeded">Number of copies needed</label>
         <div class="suffix-container">
@@ -358,7 +496,8 @@
 
     <!-- Cenodeath Certificate Fields -->
       <div id="cenodeathFields" class="type-fields">
-        <label>Name of the Deceased</label>
+        <div class="user">
+        <label id="info">Deceased Information</label>
         <div class="name-group">
           <input type="text" id="cenodeathFirstName" name="cenodeathFirstName" placeholder="First Name" />
           <input type="text" id="cenodeathLastName" name="cenodeathLastName" placeholder="Last Name" />
@@ -367,7 +506,41 @@
         <div class="suffix-container">
           <input type="text" id="cenodeathSuffix" name="cenodeathSuffix" maxlength="5" placeholder="Suffix" />
         </div>
+       
+       <div class="input-row">
+       <div class="input-group">
+          <label for="cenodeathDateOfBirth">Date of Birth</label>
+          <input type="date" id="cenodeathDateOfBirth" name="cenodeathDateOfBirth" />
+       </div>
+       <div class="input-group">
+           <label for="cenodeathPlaceOfBirth">Place of Birth</label>
+           <input type="text" id="cenodeathPlaceOfBirth" name="cenodeathPlaceOfBirth" placeholder="Street, Barangay, City, Province" />
+        </div>
+        </div>
 
+        <div class="input-row">
+        <div class="input-group">
+           <label for="birthOrientation">Sexual Orientation</label>
+           <select name="birthOrientation" id="birthOrientation">
+             <option value="male">Male</option>
+             <option value="female">Female</option>
+             <option value="non-binary">Non-Binary</option>
+           </select>
+        </div>
+        <div class="input-group">
+           <label for="birthNationality">Nationality</label>
+            <select name="birthNationality" id="birthNationality">
+             <option value="fil">Filipino</option>
+             <option value="foreign">Foreigner</option>
+           </select>
+        </div>
+        </div>
+        </div>
+
+        <div class="parent">
+        <label id="info">Parent's Information</label>
+        <br>
+        <br>
         <label>Mother's Maiden Name</label>
         <div class="name-group">
           <input type="text" id="cenodeathMotherFirstName" name="cenodeathMotherFirstName" placeholder="First Name" />
@@ -384,18 +557,19 @@
         <div class="suffix-container">
           <input type="text" id="cenodeathFatherSuffix" name="cenodeathFatherSuffix" maxlength="5" placeholder="Suffix" />
         </div>
-
-        <label for="cenodeathDateOfBirth">Date of Birth</label>
-        <input type="date" id="cenodeathDateOfBirth" name="cenodeathDateOfBirth" placeholder="Date of Birth" />
-
-        <label for="cenodeathPlaceOfBirth">Place of Birth</label>
-        <input type="text" id="cenodeathPlaceOfBirth" name="cenodeathPlaceOfBirth" placeholder="Place of Birth" />
+        </div>
 
         <label for="cenodeathCompleteAddress">Complete Address</label>
         <input type="text" id="cenodeathCompleteAddress" name="cenodeathCompleteAddress" placeholder="Complete Address" />
 
         <label for="cenodeathPurpose">Purpose of the certification</label>
-        <textarea id="cenodeathPurpose" name="cenodeathPurpose" placeholder="Purpose of the certification"></textarea>
+        <select name="cenodeathPurpose" id="cenodeathPurpose">
+          <option value="death_record">-- Select -- </option>
+          <option value="death_record">Proof of No Death Record</option>
+          <option value="lap">Legal and Administrative Purposes</option>
+          <option value="dpas">Demonstrating Potential Alive Status</option>
+          <option value="others">Others</option>
+        </select>
 
         <label for="cenodeathCopiesNeeded">Number of copies needed</label>
         <div class="suffix-container">
@@ -432,7 +606,6 @@
           <th>Full Name</th>
           <th>Certificate Type</th>
           <th>Status</th>
-          <th>Actions</th>
         </tr>
       </thead>
       <tbody id="registrationTableBody">

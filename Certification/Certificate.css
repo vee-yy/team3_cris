@@ -300,8 +300,7 @@ body{
 }
 
 .popup-content form input,
-.popup-content form select,
-.popup-content form button {
+.popup-content form select {
   width: 100%;
   padding: 10px;
   margin-top: 10px;
@@ -319,6 +318,62 @@ body{
 
 .popup-content form button:hover {
   background-color: #0056b3;
+}
+
+/* Left side: Previous button */
+#prevBtn {
+  width: auto !important;
+  margin-top: 20px;
+  background-color: #6c757d;
+  color: white;
+  padding: 10px 20px;
+  float: left;  
+}
+
+#prevBtn:hover {
+  background-color: #5a6268;
+}
+
+/* Right side: Stack Download and Submit */
+#downloadBtn {
+  order: 2;
+  display: block;
+  width: auto !important;
+  margin-left: auto;
+  padding: 10px 20px;
+  float: right;  
+}
+
+#downloadBtn {
+  background-color: #17a2b8;
+  margin-top: 20px;
+  color: white;
+  order: 2;
+  display: block;
+  margin-left: auto;
+  padding: 10px 20px;
+  float: right; 
+}
+
+#downloadBtn:hover {
+  background-color: #138496;
+}
+
+#submitBtn {
+  background-color: #28a745;
+  margin-top: 10px;
+  color: white;
+}
+
+#submitBtn:hover {
+  background-color: #218838;
+}
+
+.popup-content form button#nextBtn {
+  width: 150px;            /* Allow natural button width */
+  padding: 10px 20px;     /* Wider left/right padding */
+  margin-top: 20px;
+  float: right;           /* Align right inside the form */
 }
 
 .close-btn {
@@ -468,6 +523,113 @@ textarea {
   border-radius: 5px;
   box-sizing: content-box;
 }
+
+.user{
+  background-color: #eff6ff;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+.parent{
+  background-color: #eff6ff;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+/* Birth Birthdate - Place of Birth - Purpose */
+
+#info{
+  color: #1e40af;
+  font-weight: bold;
+}
+
+#birthFields label {
+  font-weight: bold;
+}
+
+.input-row {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 20px;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#birthDateOfBirth,
+#birthOrientation,
+#birthPlaceOfBirth {
+  padding: 4px 6px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin-bottom: 10px;
+}
+
+#birthDateOfBirth {
+  width: 15ch;
+}
+
+label[for="birthNationality"] {
+  margin-top: 16px;
+}
+
+#birthNationality{
+  width: 100%;
+  padding: 4px 6px;
+}
+
+#birthOrientation {
+  width: 15ch;
+
+}
+
+label[for="birthOrientation"] {
+  margin-top: 16px;
+}
+
+#birthPlaceOfBirth {
+  width: 28ch;
+}
+
+
+#birthPurpose {
+  width: 50%;
+  padding: 4px 6px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: column;
+}
+/* Birth purpose End */
+
+#marriageFields label {
+  font-weight: bold;
+}
+
+#deathFields label {
+  font-weight: bold;
+}
+
+#cenomarFields label {
+  font-weight: bold;
+}
+
+#cenodeathFields label {
+  font-weight: bold;
+}
+
+/* TABLE - START */
 
 .table-container {
   bottom: 0;
