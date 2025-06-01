@@ -160,7 +160,7 @@
     </div>    
     
     <!-- other Certificate -->
-    <div class="card" onclick="openForm('other Certificate')">
+    <div class="card" onclick="openOtherCertificateAlert()">
         <div class="card-content">
             <div class="header-with-icon">
                 <div class="icon-badge other">
@@ -170,7 +170,7 @@
             </div>
             <p>Need another type of certificate or document? Contact our support team for assistance.</p>
             <div class="card-footer">
-                <a href="#" class="read-more">Read More</a>
+                <a href="#" class="read-more">Contact us!</a>
               </div>
         </div>
     </div>
@@ -210,7 +210,7 @@
        <div class="input-row">
        <div class="input-group">
           <label for="birthDateOfBirth">Date of Birth</label>
-          <input type="date" id="birthDateOfBirth" name="birthDateOfBirth" />
+          <input type="date" id="birthDateOfBirth" name="Date of Birth" />
        </div>
        <div class="input-group">
            <label for="birthPlaceOfBirth">Place of Birth</label>
@@ -221,7 +221,8 @@
         <div class="input-row">
         <div class="input-group">
            <label for="birthOrientation">Sexual Orientation</label>
-           <select name="birthOrientation" id="birthOrientation">
+           <select name="Birth Orientation" id="birthOrientation">
+             <option value="Select">-- Select --</option>
              <option value="male">Male</option>
              <option value="female">Female</option>
              <option value="non-binary">Non-Binary</option>
@@ -229,9 +230,10 @@
         </div>
         <div class="input-group">
            <label for="birthNationality">Nationality</label>
-            <select name="birthNationality" id="birthNationality">
-             <option value="fil">Filipino</option>
-             <option value="foreign">Foreigner</option>
+            <select name="Nationality" id="birthNationality">
+             <option value="Select">-- Select --</option>
+             <option value="FIlipino">Filipino</option>
+             <option value="Foreigner">Foreigner</option>
            </select>
         </div>
         </div>
@@ -262,11 +264,11 @@
         </div>
 
         <label for="birthPurpose">Purpose of the certification</label><br>
-        <select name="birthPurpose" id="birthPurpose">
+        <select name="Purpose" id="birthPurpose">
           <option value="death_record">-- Select -- </option>
-          <option value="death_record">Proof of No Death Record</option>
-          <option value="lap">Legal and Administrative Purposes</option>
-          <option value="dpas">Demonstrating Potential Alive Status</option>
+          <option value="Proof of No Death Record">Proof of No Death Record</option>
+          <option value="Legal and Administrative Purposes">Legal and Administrative Purposes</option>
+          <option value="Demonstrating Potential Alive Status">Demonstrating Potential Alive Status</option>
           <option value="others">Others</option>
         </select>
         <br>
@@ -316,16 +318,18 @@
         <div class="input-group">
            <label for="marriageNationality">Wife's Nationality</label>
             <select name="marriageNationality" id="marriageNationality">
-             <option value="fil">Filipino</option>
-             <option value="foreign">Foreigner</option>
+              <option value="Select">-- Select --</option>
+             <option value="FIlipino">Filipino</option>
+             <option value="Foreigner">Foreigner</option>
            </select>
         </div>
 
            <div class="input-group">
           <label for="marriageNationality">Husband's Nationality</label>
             <select name="marriageNationality" id="marriageNationality">
-             <option value="fil">Filipino</option>
-             <option value="foreign">Foreigner</option>
+             <option value="Select">-- Select --</option>
+             <option value="FIlipino">Filipino</option>
+             <option value="Foreigner">Foreigner</option>
            </select>
         </div>
         </div>
@@ -374,6 +378,7 @@
         <div class="input-group">
            <label for="birthOrientation">Sexual Orientation</label>
            <select name="birthOrientation" id="birthOrientation">
+             <option value="Select">-- Select --</option>
              <option value="male">Male</option>
              <option value="female">Female</option>
              <option value="non-binary">Non-Binary</option>
@@ -382,8 +387,9 @@
         <div class="input-group">
            <label for="birthNationality">Nationality</label>
             <select name="birthNationality" id="birthNationality">
-             <option value="fil">Filipino</option>
-             <option value="foreign">Foreigner</option>
+             <option value="Select">-- Select --</option>
+             <option value="FIlipino">Filipino</option>
+             <option value="Foreigner">Foreigner</option>
            </select>
         </div>
         </div>
@@ -421,7 +427,8 @@
           <input type="text" id="cenomarChildMiddleInitial" name="cenomarChildMiddleInitial" placeholder="Middle Name" />
         </div>
         <div class="suffix-container">
-          <input type="text" id="cenomarChildSuffix" name="cenomarChildSuffix" maxlength="5" placeholder="Suffix" />
+          <label> Suffix (If any)</label>
+          <input type="text" id="cenomarChildSuffix" name="cenomarChildSuffix" maxlength="5" placeholder="Jr. Sr. III" />
         </div>
 
       <div class="input-row">
@@ -439,6 +446,7 @@
         <div class="input-group">
            <label for="birthOrientation">Sexual Orientation</label>
            <select name="birthOrientation" id="birthOrientation">
+             <option value="Select">-- Select --</option>
              <option value="male">Male</option>
              <option value="female">Female</option>
              <option value="non-binary">Non-Binary</option>
@@ -447,15 +455,16 @@
         <div class="input-group">
            <label for="birthNationality">Nationality</label>
             <select name="birthNationality" id="birthNationality">
-             <option value="fil">Filipino</option>
-             <option value="foreign">Foreigner</option>
+             <option value="Select">-- Select --</option>
+             <option value="FIlipino">Filipino</option>
+             <option value="Foreigner">Foreigner</option>
            </select>
         </div>
         </div>
         </div>
 
         <div class="parent">
-        <label id="info">Parent's Information</label>
+        <label id="info">Parent's Information</label><br> <br>
         <label>Mother's Maiden Name</label>
         <div class="name-group">
           <input type="text" id="cenomarMotherFirstName" name="cenomarMotherFirstName" placeholder="First Name" />
@@ -470,7 +479,8 @@
           <input type="text" id="cenomarFatherMiddleInitial" name="cenomarFatherMiddleInitial" placeholder="Middle Name" />
         </div>
         <div class="suffix-container">
-          <input type="text" id="cenomarFatherSuffix" name="cenomarFatherSuffix" maxlength="5" placeholder="Suffix" />
+          <label> Suffix (If any)</label>
+          <input type="text" id="cenomarFatherSuffix" name="cenomarFatherSuffix" maxlength="5" placeholder="Jr. Sr. III" />
         </div>
         </div>
 
@@ -504,7 +514,8 @@
           <input type="text" id="cenodeathMiddleInitial" name="cenodeathMiddleInitial" placeholder="Middle Name" />
         </div>
         <div class="suffix-container">
-          <input type="text" id="cenodeathSuffix" name="cenodeathSuffix" maxlength="5" placeholder="Suffix" />
+          <label> Suffix (If any)</label>
+          <input type="text" id="cenodeathSuffix" name="cenodeathSuffix" maxlength="5" placeholder="Jr. Sr. III" />
         </div>
        
        <div class="input-row">
@@ -522,6 +533,7 @@
         <div class="input-group">
            <label for="birthOrientation">Sexual Orientation</label>
            <select name="birthOrientation" id="birthOrientation">
+             <option value="Select">-- Select --</option>
              <option value="male">Male</option>
              <option value="female">Female</option>
              <option value="non-binary">Non-Binary</option>
@@ -530,8 +542,9 @@
         <div class="input-group">
            <label for="birthNationality">Nationality</label>
             <select name="birthNationality" id="birthNationality">
-             <option value="fil">Filipino</option>
-             <option value="foreign">Foreigner</option>
+             <option value="Select">-- Select --</option>
+             <option value="FIlipino">Filipino</option>
+             <option value="Foreigner">Foreigner</option>
            </select>
         </div>
         </div>
@@ -555,7 +568,8 @@
           <input type="text" id="cenodeathFatherMiddleInitial" name="cenodeathFatherMiddleInitial" placeholder="Middle Name" />
         </div>
         <div class="suffix-container">
-          <input type="text" id="cenodeathFatherSuffix" name="cenodeathFatherSuffix" maxlength="5" placeholder="Suffix" />
+          <label> Suffix (If any)</label>
+          <input type="text" id="cenodeathFatherSuffix" name="cenodeathFatherSuffix" maxlength="5" placeholder="Jr. Sr. III" />
         </div>
         </div>
 
@@ -584,7 +598,7 @@
   <div class="form-step" data-step="1">
     <h3>Review Your Information</h3>
     <p>Please verify all your data before submitting.</p>
-    <div id="reviewSummary" style="border:1px solid #ccc; padding:1rem; margin-bottom:1rem;"></div>
+    <div id="reviewSummary" class="review-summary"></div>
     <button type="button" id="prevBtn">Previous</button>
     <button type="button" id="downloadBtn">Download PDF</button>
     <button type="submit" id="submitBtn">Submit</button>

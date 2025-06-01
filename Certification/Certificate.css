@@ -629,6 +629,29 @@ label[for="birthOrientation"] {
   font-weight: bold;
 }
 
+/* Review Section - START */
+
+.review-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  border-bottom: 1px solid #eee;
+}
+
+.review-item .label {
+  font-weight: bold;
+  color: #333;
+}
+
+.review-item .value {
+  color: #555;
+  text-align: right;
+  max-width: 50%;
+  word-break: break-word;
+}
+
+
+
 /* TABLE - START */
 
 .table-container {

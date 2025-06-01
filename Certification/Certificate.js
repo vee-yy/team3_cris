@@ -77,6 +77,27 @@ function openContactPopup() {
   Swal.fire({ icon: 'info', title: 'Contact Us', text: 'This is the Contact Us section.' });
 }
 
+//Function for OTHER CERTIFICATES card click //
+
+function openOtherCertificateAlert() {
+  Swal.fire({
+    icon: 'info',
+    title: 'Other Certificate',
+    html: `
+   <p>If you need other documents, contact us:</p>
+    <ul style="text-align:left;">
+      <li>Email: <a href="cris.support@gmail.com">support@example.com</a></li>
+      <li>Phone: 123-456-7890</li>
+      <li>Office hours: 9am - 5pm</li>
+    </ul>
+    `,
+    confirmButtonText: 'Close',
+    confirmButtonColor: '#3b82f6',
+    width: '400px',
+  });
+}
+
+
 // Function for sweet alert for every card click
 
 function openForm(type) {
@@ -183,7 +204,7 @@ function showStep(step) {
 }
 
 // Validate all visible inputs in the active certificate type section
-function validateStep1() {
+function validateStep0() {
   const certType = document.getElementById('certificateType').value;
   const sectionId = sectionMap[certType];
   const section = document.getElementById(sectionId);
@@ -195,7 +216,7 @@ function validateStep1() {
       Swal.fire({
         icon: 'error',
         title: 'Validation Error',
-        text: `Please fill out the required field: ${input.placeholder || input.name}`,
+        text: `Please fill out the required field: ${input.placeholder || input.name}. You can enter "N/A" if not applicable.`,
         confirmButtonColor: '#3b82f6'
       });
       input.focus();
@@ -204,6 +225,7 @@ function validateStep1() {
   }
   return true;
 }
+
 
 //Generate the summary of inputs for the selected certificate type and download as PDF basta ayon jusko po
 function generateSummary() {
@@ -218,14 +240,18 @@ function generateSummary() {
   inputs.forEach(input => {
     const label = input.getAttribute('placeholder') || input.name || input.id || 'Field';
     const value = input.value.trim() || '<em>Not provided</em>';
-    summaryHTML += `<p><strong>${label}:</strong> ${value}</p>`;
+    summaryHTML += `
+      <div class="review-item">
+        <div class="label">${label}</div>
+        <div class="value">${value}</div>
+      </div>`;
   });
 
   document.getElementById('reviewSummary').innerHTML = summaryHTML;
 }
 
 nextBtn.addEventListener('click', () => {
-  if (!validateStep1()) return;
+  if (!validateStep0()) return;
 
   generateSummary();
   currentStep = 1;
@@ -261,8 +287,16 @@ downloadBtn.addEventListener('click', () => {
   doc.save('registration-summary.pdf');
 });
 
+let registrationCount = 0;
+
 form.addEventListener('submit', e => {
   e.preventDefault();
+
+  // Increment count each time form is submitted
+  registrationCount++;
+
+  // Format ID with leading zeros, e.g., REG-00001
+  const idNumber = `REG-${String(registrationCount).padStart(5, '0')}`;
 
   const certType = document.getElementById('certificateType').value;
   const sectionId = sectionMap[certType];
@@ -281,7 +315,7 @@ form.addEventListener('submit', e => {
 
   const newRow = document.createElement('tr');
   newRow.innerHTML = `
-    <td>${Date.now()}</td>
+    <td>${idNumber}</td>  <!-- Use your formatted ID here -->
     <td>${fullName}</td>
     <td>${certType}</td>
     <td>Pending</td>
