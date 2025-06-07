@@ -89,6 +89,24 @@ body {
   font-weight: 700;
 }
 
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* Space for the icon */
+}
+
+.toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
 .form-section {
   padding: 18px 16px;
   font-size: 0.9rem;
@@ -159,4 +177,18 @@ body {
     padding: 24px 16px 16px;
     gap: 14px;
   }
+}
+
+.forgot-password {
+  text-align: left;
+}
+
+#forgotpass{
+  text-decoration: none;
+  color: rgb(144, 144, 144);
+}
+
+#forgotpass:hover {
+  color: #0066ff;
+  text-decoration: underline;
 }

@@ -66,7 +66,10 @@ td.innerHTML = td.textContent;
 // Function to open the home, about, and contact popups
 
 function openHomePopup() {
-  Swal.fire({ icon: 'info', title: 'Home', text: 'This is the Home section.' });
+  Swal.fire({ 
+    icon: 'info', 
+    title: 'Home', 
+    text: 'This is the Home section.' });
 }
 
 function openAboutPopup() {
@@ -75,6 +78,16 @@ function openAboutPopup() {
 
 function openContactPopup() {
   Swal.fire({ icon: 'info', title: 'Contact Us', text: 'This is the Contact Us section.' });
+}
+
+function openOtherCertificateAlert(){
+  Swal.fire({
+    icon: 'info',
+    title: 'Other Certificate',
+    text: 'Contact us Via email cris.support@gmail.com.',
+    confirmButtonText: 'OK',
+    confirmButtonColor: '#3b82f6'
+  })
 }
 
 // Function for sweet alert for every card click
@@ -218,7 +231,11 @@ function generateSummary() {
   inputs.forEach(input => {
     const label = input.getAttribute('placeholder') || input.name || input.id || 'Field';
     const value = input.value.trim() || '<em>Not provided</em>';
-    summaryHTML += `<p><strong>${label}:</strong> ${value}</p>`;
+    summaryHTML += `
+      <div class="review-item">
+        <div class="label">${label}</div>
+        <div class="value">${value}</div>
+      </div>`;
   });
 
   document.getElementById('reviewSummary').innerHTML = summaryHTML;
@@ -261,8 +278,16 @@ downloadBtn.addEventListener('click', () => {
   doc.save('registration-summary.pdf');
 });
 
+let registrationCount = 0;
+
 form.addEventListener('submit', e => {
   e.preventDefault();
+
+// Increment count each time form is submitted
+  registrationCount++;
+
+// Format ID with leading zeros, e.g., REG-00001
+  const idNumber = `REG-${String(registrationCount).padStart(5, '0')}`;
 
   const certType = document.getElementById('certificateType').value;
   const sectionId = sectionMap[certType];
@@ -281,7 +306,7 @@ form.addEventListener('submit', e => {
 
   const newRow = document.createElement('tr');
   newRow.innerHTML = `
-    <td>${Date.now()}</td>
+    <td>${idNumber}</td>
     <td>${fullName}</td>
     <td>${certType}</td>
     <td>Pending</td>
@@ -291,7 +316,7 @@ form.addEventListener('submit', e => {
   Swal.fire({
     icon: 'success',
     title: 'Thank you for your cooperation!',
-    text: 'We will send you an email of when you will be able to claim your certificate.',
+    text: 'Kindly check your email to verify the payment and updates of your registration.',
     confirmButtonColor: '#3b82f6'
   }).then(() => {
     closeForm();

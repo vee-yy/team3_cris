@@ -5,18 +5,26 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="LoginPage.css" />
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <title>Login Page</title>
 </head>
 <body>
 
   <div class="form-box" id="signupBox">
-    <form class="form" id="signupForm">
+    <form class="form" id="signupForm" method="post" action="register.php">
       <span class="title">Sign up</span>
       <span class="subtitle">Create a free account with your email.</span>
       <div class="form-container">
         <input type="text" name="username" class="input" placeholder="Username" />
         <input type="email" name="email" class="input" placeholder="Email" />
+<<<<<<< HEAD
         <input type="password" name="password" class="input" placeholder="Password" />
+=======
+        <div class="password-wrapper">
+          <input type="password" class="input" placeholder="Password" id="password">
+          <i class="fas fa-eye toggle-password" toggle="#password"></i>
+        </div>
+>>>>>>> 358c01b3e3dd65edede5562c359eb381e0c0f572
       </div>
       <button type="button" onclick="SignUp()">Sign up</button>
     </form>
@@ -31,9 +39,15 @@
       <span class="subtitle">Welcome back! Please log in.</span>
       <div class="form-container">
         <input type="email" class="input" placeholder="Email" />
-        <input type="password" class="input" placeholder="Password" />
+        <div class="password-wrapper">
+          <input type="password" id="loginPassword" class="input" placeholder="Password" />
+          <i class="fas fa-eye toggle-password" toggle="#loginPassword"></i>
+        </div> 
       </div>
-      <button type="button" onclick="LogIn()">Log in</button>
+      <div class="forgot-password">
+        <a href="#" onclick="forgotPassword()" id="forgotpass">Forgot Password?</a>
+      </div>
+      <button type="button" onclick="LogIn()"> <i class="fas fa-sign-in-alt"></i> Log in</button>
     </form>
     <div class="form-section">
       <p>Don't have an account? <a href="#" class="highlighted-link" onclick="toggleForms()">Sign up</a></p>
