@@ -17,14 +17,7 @@
       <div class="form-container">
         <input type="text" name="username" class="input" placeholder="Username" />
         <input type="email" name="email" class="input" placeholder="Email" />
-<<<<<<< HEAD
         <input type="password" name="password" class="input" placeholder="Password" />
-=======
-        <div class="password-wrapper">
-          <input type="password" class="input" placeholder="Password" id="password">
-          <i class="fas fa-eye toggle-password" toggle="#password"></i>
-        </div>
->>>>>>> 358c01b3e3dd65edede5562c359eb381e0c0f572
       </div>
       <button type="button" onclick="SignUp()">Sign up</button>
     </form>
@@ -34,7 +27,7 @@
   </div>
 
   <div class="form-box" id="loginBox" style="display: none;">
-    <form class="form" id="loginForm">
+    <form class="form" id="loginForm" action="login.php" method="post">
       <span class="title">Log in</span>
       <span class="subtitle">Welcome back! Please log in.</span>
       <div class="form-container">
