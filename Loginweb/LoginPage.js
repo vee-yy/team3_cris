@@ -3,7 +3,6 @@ function isValidEmail(email) {
     return emailRegex.test(email);
 }
 
-// SIGNUP FORM HANDLER
 document.getElementById('signupForm').addEventListener('submit', function (e) {
     e.preventDefault();
 
@@ -22,7 +21,6 @@ document.getElementById('signupForm').addEventListener('submit', function (e) {
         return;
     }
 
-    // Send data to PHP
     fetch('register.php', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -44,7 +42,6 @@ document.getElementById('signupForm').addEventListener('submit', function (e) {
         });
 });
 
-// LOGIN FORM HANDLER
 function LogIn() {
     const form = document.getElementById('loginForm');
     const email = form.querySelector('input[type=email]').value.trim();
@@ -70,41 +67,53 @@ function LogIn() {
         return false;
     }
 
-    let users = JSON.parse(localStorage.getItem('users')) || [];
-    const foundUser = users.find(user => user.email === email && user.password === password);
+    fetch('login.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            localStorage.setItem('loggedInUser', JSON.stringify({
+                username: data.username,
+                email: email
+            }));
 
-    if (foundUser) {
-        localStorage.setItem('loggedInUser', JSON.stringify({
-            username: foundUser.username,
-            email: foundUser.email
-        }));
-
-        Swal.fire({
-            icon: 'success',
-            title: 'Welcome Back!',
-            text: `Welcome, ${foundUser.username}!`,
-            confirmButtonText: 'OK'
-        }).then(() => {
-            window.location.href = './CertificationCertificate.html';
-        });
-    } else {
+            Swal.fire({
+                icon: 'success',
+                title: 'Welcome Back!',
+                text: `Welcome, ${data.username}!`,
+                confirmButtonText: 'OK'
+            }).then(() => {
+                window.location.href = './CertificationCertificate.html';
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Login',
+                text: data.message,
+                confirmButtonText: 'OK'
+            });
+        }
+    })
+    .catch(() => {
         Swal.fire({
             icon: 'error',
-            title: 'Invalid Login',
-            text: 'This email or password is invalid. Sign up if you don\'t have an account yet.',
+            title: 'Server Error',
+            text: 'Try again later.',
             confirmButtonText: 'OK'
         });
-    }
-    return false; // prevent default submit for demo; remove if you want actual POST submit
+    });
+
+    return false; 
 }
 
-// Attach login form submit event handler that uses LogIn()
 document.getElementById('loginForm').addEventListener('submit', function (e) {
     e.preventDefault();
     LogIn();
 });
 
-// Toggle between signup and login forms
 function toggleForms() {
     const signupBox = document.getElementById('signupBox');
     const loginBox = document.getElementById('loginBox');
@@ -118,7 +127,6 @@ function toggleForms() {
     }
 }
 
-// Forgot Password handler
 function forgotPassword() {
     Swal.fire({
         title: 'Forgot Password',
@@ -141,7 +149,6 @@ function forgotPassword() {
     });
 }
 
-// Password visibility toggle for login form
 document.querySelectorAll('.toggle-password').forEach(icon => {
     icon.addEventListener('click', function () {
         const input = document.querySelector(this.getAttribute('toggle'));
