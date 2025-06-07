@@ -1,10 +1,10 @@
-<script>
+
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-// ✳️ Signup Validation (Used by PHP register.php)
+// Signup Validation (Used by PHP register.php)
 function validateSignupForm() {
   const form = document.getElementById('signupForm');
   const fullName = form.querySelector('input[name="username"]').value.trim();
@@ -109,4 +109,4 @@ document.querySelectorAll('.toggle-password').forEach(icon => {
     this.classList.toggle('fa-eye-slash');
   });
 });
-</script>
+
