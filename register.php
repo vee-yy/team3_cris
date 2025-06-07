@@ -19,11 +19,7 @@
             $sql = "INSERT INTO users(username,email,password) VALUES ('$username','$email','$hashed_password')";
             if($conn->query($sql)===TRUE){
                 echo "Account is created!";
-<<<<<<< HEAD
                 header("Location: index.html");
-=======
-                header("Location: index.php");
->>>>>>> 358c01b3e3dd65edede5562c359eb381e0c0f572
                 exit();
             } else {
                 echo "Error: " . $conn->error;
