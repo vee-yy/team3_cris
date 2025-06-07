@@ -1,13 +1,15 @@
+<script>
 function isValidEmail(email) {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   return emailRegex.test(email);
 }
 
-function SignUp() {
+// ✳️ Signup Validation (Used by PHP register.php)
+function validateSignupForm() {
   const form = document.getElementById('signupForm');
-  const fullName = form.querySelector('input[type="text"]').value.trim();
-  const email = form.querySelector('input[type="email"]').value.trim();
-  const password = form.querySelector('input[type="password"]').value.trim();
+  const fullName = form.querySelector('input[name="username"]').value.trim();
+  const email = form.querySelector('input[name="email"]').value.trim();
+  const password = form.querySelector('input[name="password"]').value.trim();
 
   if (!fullName || !email || !password) {
     Swal.fire({
@@ -16,7 +18,7 @@ function SignUp() {
       text: 'Please fill in all the required fields before signing up.',
       confirmButtonText: 'OK'
     });
-    return;
+    return false; // Prevent form submission
   }
 
   if (!isValidEmail(email)) {
@@ -26,39 +28,17 @@ function SignUp() {
       text: 'Please enter a valid email address.',
       confirmButtonText: 'OK'
     });
-    return;
+    return false;
   }
 
-  let users = JSON.parse(localStorage.getItem('users')) || [];
-  const existingUser = users.find(user => user.email === email);
-
-  if (existingUser) {
-    Swal.fire({
-      icon: 'error',
-      title: 'User Already Exists',
-      text: 'This email is already registered. Please log in.',
-      confirmButtonText: 'OK'
-    });
-    return;
-  }
-
-  users.push({ email, password, fullName });
-  localStorage.setItem('users', JSON.stringify(users));
-
-  Swal.fire({
-    icon: 'success',
-    title: 'Account Created',
-    text: 'You can now log in with your credentials.',
-    confirmButtonText: 'OK'
-  }).then(() => {
-    toggleForms(); // Switch to the login form
-  });
+  return true; // Allow form to submit to PHP
 }
 
-function LogIn() {
+// ✳️ Login Validation (Used by PHP login.php)
+function validateLoginForm() {
   const form = document.getElementById('loginForm');
-  const email = form.querySelector('input[type="email"]').value.trim();
-  const password = form.querySelector('input[type="password"]').value.trim();
+  const email = form.querySelector('input[name="email"]').value.trim();
+  const password = form.querySelector('input[name="password"]').value.trim();
 
   if (!email || !password) {
     Swal.fire({
@@ -67,7 +47,7 @@ function LogIn() {
       text: 'Please fill in all the required fields before logging in.',
       confirmButtonText: 'OK'
     });
-    return;
+    return false;
   }
 
   if (!isValidEmail(email)) {
@@ -77,32 +57,13 @@ function LogIn() {
       text: 'Please enter a valid email address.',
       confirmButtonText: 'OK'
     });
-    return;
+    return false;
   }
 
-  let users = JSON.parse(localStorage.getItem('users')) || [];
-  const foundUser = users.find(user => user.email === email && user.password === password);
-
-  if (foundUser) {
-    Swal.fire({
-      icon: 'success',
-      title: 'Welcome Back!',
-      text: `Welcome, ${foundUser.fullName}!`,
-      confirmButtonText: 'OK'
-    }).then(() => {
-      window.location.href = "../Certification/Certificate.html"; // Redirect after login
-    });
-  } else {
-    Swal.fire({
-      icon: 'error',
-      title: 'Invalid Login',
-      text: 'This email or password is invalid. Sign up if you don\'t have an account yet.',
-      confirmButtonText: 'OK'
-    });
-  }
+  return true; // Allow form to submit to PHP
 }
 
-
+// ✳️ Toggle login/signup forms
 function toggleForms() {
   const signupBox = document.getElementById("signupBox");
   const loginBox = document.getElementById("loginBox");
@@ -116,6 +77,7 @@ function toggleForms() {
   }
 }
 
+// ✳️ Forgot password popup
 function forgotPassword() {
   Swal.fire({
     title: 'Forgot Password',
@@ -138,6 +100,7 @@ function forgotPassword() {
   });
 }
 
+// ✳️ Show/hide password
 document.querySelectorAll('.toggle-password').forEach(icon => {
   icon.addEventListener('click', function () {
     const input = document.querySelector(this.getAttribute('toggle'));
@@ -146,5 +109,4 @@ document.querySelectorAll('.toggle-password').forEach(icon => {
     this.classList.toggle('fa-eye-slash');
   });
 });
-
-
+</script>
