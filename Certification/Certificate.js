@@ -4,64 +4,88 @@ document.addEventListener('DOMContentLoaded', function () {
 
   if (searchInput) {
     searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase();
+      const query = searchInput.value.toLowerCase();
 
-    function highlightText(element, query) {
-      if (!query) {
+      function highlightText(element, query) {
+        if (!query) {
           element.innerHTML = element.textContent;
-        return;
-      }
+          return;
+        }
 
-    const text = element.textContent;
-    const regex = new RegExp(`(${query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
+        const text = element.textContent;
+        const regex = new RegExp(`(${query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&')})`, 'gi');
 
         element.innerHTML = text.replace(regex, '<mark>$1</mark>');
-  }
+      }
 
-// Search & highlight cards
-    const cards = document.querySelectorAll('.card');
+      // Search & highlight cards
+      const cards = document.querySelectorAll('.card');
       cards.forEach(card => {
         const cardText = card.innerText.toLowerCase();
         if (cardText.includes(query)) {
           card.style.display = 'flex';
-
- // Highlight matches inside the card's h2 (or you can choose whole card)
-    const title = card.querySelector('h2');
-        if (title) highlightText(title, query);
+          const title = card.querySelector('h2');
+          if (title) highlightText(title, query);
         } else {
-        card.style.display = 'none';
-
-// Remove highlights if hidden
-    const title = card.querySelector('h2');
-        if (title) highlightText(title, '');
+          card.style.display = 'none';
+          const title = card.querySelector('h2');
+          if (title) highlightText(title, '');
         }
       });
 
-// Search & highlight rows in table
-const rows = document.querySelectorAll('#registrationTableBody tr');
-   rows.forEach(row => {
-const rowText = row.innerText.toLowerCase();
-  if (rowText.includes(query)) {
-    row.style.display = '';
-const nameCell = row.querySelectorAll('td')[1];
-  if (nameCell) {
-      highlightText(nameCell, query);
-   }
-row.querySelectorAll('td').forEach((td, i) => {
-   if (i !== 1) {
-     td.innerHTML = td.textContent;
-     }
-   });
-  } else {
-row.style.display = 'none';
-row.querySelectorAll('td').forEach(td => {
-td.innerHTML = td.textContent;
+      // Search & highlight rows in table
+      const rows = document.querySelectorAll('#registrationTableBody tr');
+      rows.forEach(row => {
+        const rowText = row.innerText.toLowerCase();
+        if (rowText.includes(query)) {
+          row.style.display = '';
+          const nameCell = row.querySelectorAll('td')[1];
+          if (nameCell) highlightText(nameCell, query);
+          row.querySelectorAll('td').forEach((td, i) => {
+            if (i !== 1) td.innerHTML = td.textContent;
+          });
+        } else {
+          row.style.display = 'none';
+          row.querySelectorAll('td').forEach(td => {
+            td.innerHTML = td.textContent;
           });
         }
       });
     });
- }
+  }
+
+  // ✅ NEWLY ADDED: Check if submission is successful and add a row
+  const params = new URLSearchParams(window.location.search);
+  if (params.get('submitted') === 'true') {
+    const id = params.get('id');
+    const name = decodeURIComponent(params.get('name'));
+    const type = decodeURIComponent(params.get('type'));
+    const status = params.get('status') || 'Pending';
+
+    const tableBody = document.querySelector('#registrationTableBody');
+    if (tableBody) {
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${id}</td>
+        <td>${name}</td>
+        <td>${type}</td>
+        <td>${status}</td>
+      `;
+      tableBody.appendChild(newRow);
+    }
+
+    Swal.fire({
+      icon: 'success',
+      title: 'Thank you for your cooperation!',
+      text: 'Kindly check your email to verify the payment and updates of your registration.',
+      confirmButtonColor: '#3b82f6'
+    });
+
+    // Remove query params so popup doesn't reappear on refresh
+    history.replaceState(null, '', window.location.pathname);
+  }
 });
+
 
 // Function to open the home, about, and contact popups
 
@@ -280,13 +304,10 @@ downloadBtn.addEventListener('click', () => {
 
 let registrationCount = 0;
 
-form.addEventListener('submit', e => {
-  e.preventDefault();
+form.addEventListener('submit', async e => {
+  console.log("Form submission intercepted.");
 
-// Increment count each time form is submitted
   registrationCount++;
-
-// Format ID with leading zeros, e.g., REG-00001
   const idNumber = `REG-${String(registrationCount).padStart(5, '0')}`;
 
   const certType = document.getElementById('certificateType').value;
@@ -301,28 +322,48 @@ form.addEventListener('submit', e => {
 
   const fullName = [firstName, middleInitial && middleInitial + '.', lastName, suffix].filter(Boolean).join(' ').trim();
 
-  const tableBody = document.querySelector('#registrationTableBody');
-  if (!tableBody) return;
+  const formData = new FormData(form);
 
-  const newRow = document.createElement('tr');
-  newRow.innerHTML = `
-    <td>${idNumber}</td>
-    <td>${fullName}</td>
-    <td>${certType}</td>
-    <td>Pending</td>
-  `;
-  tableBody.appendChild(newRow);
+  try {
+    const response = await fetch(form.action, {
+      method: form.method,
+      body: formData
+    });
 
-  Swal.fire({
-    icon: 'success',
-    title: 'Thank you for your cooperation!',
-    text: 'Kindly check your email to verify the payment and updates of your registration.',
-    confirmButtonColor: '#3b82f6'
-  }).then(() => {
-    closeForm();
+    if (response.ok) {
+      const tableBody = document.querySelector('#registrationTableBody');
+      const newRow = document.createElement('tr');
+      newRow.innerHTML = `
+        <td>${idNumber}</td>
+        <td>${fullName}</td>
+        <td>${certType}</td>
+        <td>Pending</td>
+      `;
+      tableBody.appendChild(newRow);
 
-  });
+      Swal.fire({
+        icon: 'success',
+        title: 'Thank you for your cooperation!',
+        text: 'Kindly check your email to verify the payment and updates of your registration.',
+        confirmButtonColor: '#3b82f6'
+      }).then(() => {
+        closeForm();
+      });
+
+    } else {
+      throw new Error('Submission failed.');
+    }
+  } catch (error) {
+    console.error('Error submitting form:', error);
+    Swal.fire({
+      icon: 'error',
+      title: 'Submission Failed',
+      text: 'Please try again later.',
+      confirmButtonColor: '#ef4444'
+    });
+  }
 });
+
 
 //First AAAAAAAAAAARRGGHHH
 showStep(currentStep);

@@ -189,7 +189,7 @@
       <li>Review</li>
     </ul>
 
-<form id="certificateForm">
+<form id="certificateForm" action="handle_certificate.php" method="post">
 <input type="hidden" id="certificateType" name="certificateType" />
 
   <!-- Step 1 -->
@@ -201,7 +201,7 @@
         <div class="name-group">
           <input type="text" id="birthFirstName" name="birthFirstName" placeholder="First Name" />
           <input type="text" id="birthLastName" name="birthLastName" placeholder="Last Name" />
-          <input type="text" id="birthMiddleInitial" name="birthMiddleInitial" placeholder="Middle Name" />
+          <input type="text" id="birthMiddleInitial" name="birthMiddleInitial" placeholder="Middle Name"/>
         </div>
         <label>Only if applicable</label>
         <div class="suffix-container">
@@ -300,7 +300,7 @@
 
         <label>Suffix (if any) </label>
         <div class="suffix-container">
-          <input type="text" id="birthSuffix" name="marriageSuffix" maxlength="5" placeholder="Jr. Sr. III, IV" />
+          <input type="text" id="birthSuffix" name="marriageHusbandSuffix" maxlength="5" placeholder="Jr. Sr. III, IV" />
         </div>
 
        <div class="input-row">
@@ -318,7 +318,7 @@
         <div class="input-row">
         <div class="input-group">
            <label for="marriageNationality">Wife's Nationality</label>
-            <select name="marriageNationality" id="marriageNationality">
+            <select name="marriageWifeNationality" id="marriageNationality">
               <option value="Select">-- Select --</option>
              <option value="FIlipino">Filipino</option>
              <option value="Foreigner">Foreigner</option>
@@ -327,7 +327,7 @@
 
            <div class="input-group">
           <label for="marriageNationality">Husband's Nationality</label>
-            <select name="marriageNationality" id="marriageNationality">
+            <select name="marriageHusbandNationality" id="marriageNationality">
              <option value="Select">-- Select --</option>
              <option value="FIlipino">Filipino</option>
              <option value="Foreigner">Foreigner</option>
@@ -533,7 +533,7 @@
         <div class="input-row">
         <div class="input-group">
            <label for="birthOrientation">Sexual Orientation</label>
-           <select name="birthOrientation" id="birthOrientation">
+           <select name="cenodeathOrientation" id="birthOrientation">
              <option value="Select">-- Select --</option>
              <option value="male">Male</option>
              <option value="female">Female</option>
@@ -542,7 +542,7 @@
         </div>
         <div class="input-group">
            <label for="birthNationality">Nationality</label>
-            <select name="birthNationality" id="birthNationality">
+            <select name="cenodeathNationality" id="birthNationality">
              <option value="Select">-- Select --</option>
              <option value="FIlipino">Filipino</option>
              <option value="Foreigner">Foreigner</option>

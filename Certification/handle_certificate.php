@@ -1,6 +1,6 @@
 <?php
 session_start();
-include 'connect.php';
+include "../connect.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (!isset($_SESSION['user_id'])) {
@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     $user_id = $_SESSION['user_id'];
-    $certificateType = $_POST['certificate_type'];
+    $certificateType = $_POST['certificateType'];
 
     if ($certificateType === 'birth') {
         // BIRTH CERTIFICATE
@@ -87,11 +87,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "isssssssssisi",
-            $user_id, $dead_firstname, $dead_middlename, $dead_lastname, $dead_suffix,
-            $date_birth, $date_death, $sexual_orientation, $nationality, $place_death,
-            $purpose_certi, $number_copies
-        );
+    "isssssssssssi",
+    $user_id, $dead_firstname, $dead_middlename, $dead_lastname, $dead_suffix,
+    $date_birth, $date_death, $sexual_orientation, $nationality, $place_death,
+    $purpose_certi, $number_copies
+);
 
     } elseif ($certificateType === 'marriage') {
         // MARRIAGE CERTIFICATE
@@ -144,10 +144,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $child_middlename = $_POST['cenomarChildMiddleInitial'];
         $child_lastname = $_POST['cenomarChildLastName'];
         $child_suffix = $_POST['cenomarChildSuffix'];
-        $date_birth = $_POST['cenomarDateOfBirth']; 
-        $place_birth = $_POST['cenomarPlaceOfBirth']; 
-        $sexual_orientation = $_POST['cenomarOrientation']; 
-        $child_nationality = $_POST['cenomarNationality']; 
+        $date_birth = $_POST['cenomarDateOfBirth'];
+        $place_birth = $_POST['cenomarPlaceOfBirth'];
+        $sexual_orientation = $_POST['cenomarOrientation'];
+        $child_nationality = $_POST['cenomarNationality'];
 
         $mother_firstname = $_POST['cenomarMotherFirstName'];
         $mother_middlename = $_POST['cenomarMotherMiddleInitial'];
@@ -158,8 +158,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $father_lastname = $_POST['cenomarFatherLastname'];
         $father_suffix = $_POST['cenomarFatherSuffix'];
 
-        $address = $_POST['cenomarCompleteAddress']; 
-        $purpose_certi = $_POST['cenomarPurpose']; 
+        $address = $_POST['cenomarCompleteAddress'];
+        $purpose_certi = $_POST['cenomarPurpose'];
         $number_copies = $_POST['cenomarCopiesNeeded'];
 
         $sql = "INSERT INTO cenomar_certi (
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     child_firstname, child_middlename, child_lastname, child_suffix,
                     mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
                     father_firstname, father_middlename, father_lastname, father_suffix,
-                    date_birth, place_birth, address, number_copies, created_at
+                    date_birth, place_birth, address, purpose_certi, number_copies, created_at
                 ) VALUES (
                     ?, 'PENDING',
                     ?, ?, ?, ?,
@@ -245,3 +245,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $conn->close();
 }
 ?>
+
