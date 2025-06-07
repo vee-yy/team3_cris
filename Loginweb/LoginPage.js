@@ -1,112 +1,152 @@
-
 function isValidEmail(email) {
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailRegex.test(email);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
 }
 
-// Signup Validation (Used by PHP register.php)
-function validateSignupForm() {
-  const form = document.getElementById('signupForm');
-  const fullName = form.querySelector('input[name="username"]').value.trim();
-  const email = form.querySelector('input[name="email"]').value.trim();
-  const password = form.querySelector('input[name="password"]').value.trim();
+// SIGNUP FORM HANDLER
+document.getElementById('signupForm').addEventListener('submit', function (e) {
+    e.preventDefault();
 
-  if (!fullName || !email || !password) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Incomplete Information',
-      text: 'Please fill in all the required fields before signing up.',
-      confirmButtonText: 'OK'
-    });
-    return false; // Prevent form submission
-  }
+    const form = e.target;
+    const username = form.querySelector('input[name=username]').value.trim();
+    const email = form.querySelector('input[type=email]').value.trim();
+    const password = form.querySelector('input[type=password]').value.trim();
 
-  if (!isValidEmail(email)) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Invalid Email',
-      text: 'Please enter a valid email address.',
-      confirmButtonText: 'OK'
-    });
-    return false;
-  }
-
-  return true; // Allow form to submit to PHP
-}
-
-// ✳️ Login Validation (Used by PHP login.php)
-function validateLoginForm() {
-  const form = document.getElementById('loginForm');
-  const email = form.querySelector('input[name="email"]').value.trim();
-  const password = form.querySelector('input[name="password"]').value.trim();
-
-  if (!email || !password) {
-    Swal.fire({
-      icon: 'warning',
-      title: 'Incomplete Information',
-      text: 'Please fill in all the required fields before logging in.',
-      confirmButtonText: 'OK'
-    });
-    return false;
-  }
-
-  if (!isValidEmail(email)) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Invalid Email',
-      text: 'Please enter a valid email address.',
-      confirmButtonText: 'OK'
-    });
-    return false;
-  }
-
-  return true; // Allow form to submit to PHP
-}
-
-// ✳️ Toggle login/signup forms
-function toggleForms() {
-  const signupBox = document.getElementById("signupBox");
-  const loginBox = document.getElementById("loginBox");
-
-  if (signupBox.style.display === "none") {
-    signupBox.style.display = "block";
-    loginBox.style.display = "none";
-  } else {
-    signupBox.style.display = "none";
-    loginBox.style.display = "block";
-  }
-}
-
-// ✳️ Forgot password popup
-function forgotPassword() {
-  Swal.fire({
-    title: 'Forgot Password',
-    input: 'email',
-    inputLabel: 'Enter your email address',
-    inputPlaceholder: 'your@example.com',
-    showCancelButton: true,
-    confirmButtonText: 'Send Reset Link',
-    preConfirm: (email) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve();
-        }, 1000);
-      });
+    if (!username || !email || !password) {
+        Swal.fire({ icon: 'warning', title: 'Incomplete Information', text: 'Fill in all fields.' });
+        return;
     }
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire('Email Sent!', 'Check your inbox for a reset link.', 'success');
-    }
-  });
-}
 
-// ✳️ Show/hide password
-document.querySelectorAll('.toggle-password').forEach(icon => {
-  icon.addEventListener('click', function () {
-    const input = document.querySelector(this.getAttribute('toggle'));
-    const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
-    input.setAttribute('type', type);
-    this.classList.toggle('fa-eye-slash');
-  });
+    if (!isValidEmail(email)) {
+        Swal.fire({ icon: 'error', title: 'Invalid Email', text: 'Enter a valid email.' });
+        return;
+    }
+
+    // Send data to PHP
+    fetch('register.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ username, email, password })
+    })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({ icon: 'success', title: 'Account Created' }).then(() => {
+                    toggleForms();
+                    form.reset();
+                });
+            } else {
+                Swal.fire({ icon: 'error', title: 'Signup Failed', text: data.message });
+            }
+        })
+        .catch(() => {
+            Swal.fire({ icon: 'error', title: 'Server Error', text: 'Try again later.' });
+        });
 });
 
+// LOGIN FORM HANDLER
+function LogIn() {
+    const form = document.getElementById('loginForm');
+    const email = form.querySelector('input[type=email]').value.trim();
+    const password = form.querySelector('input[type=password]').value.trim();
+
+    if (!email || !password) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Incomplete Information',
+            text: 'Please fill in all the required fields before logging in.',
+            confirmButtonText: 'OK'
+        });
+        return false;
+    }
+
+    if (!isValidEmail(email)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Email',
+            text: 'Please enter a valid email address.',
+            confirmButtonText: 'OK'
+        });
+        return false;
+    }
+
+    let users = JSON.parse(localStorage.getItem('users')) || [];
+    const foundUser = users.find(user => user.email === email && user.password === password);
+
+    if (foundUser) {
+        localStorage.setItem('loggedInUser', JSON.stringify({
+            username: foundUser.username,
+            email: foundUser.email
+        }));
+
+        Swal.fire({
+            icon: 'success',
+            title: 'Welcome Back!',
+            text: `Welcome, ${foundUser.username}!`,
+            confirmButtonText: 'OK'
+        }).then(() => {
+            window.location.href = './CertificationCertificate.html';
+        });
+    } else {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid Login',
+            text: 'This email or password is invalid. Sign up if you don\'t have an account yet.',
+            confirmButtonText: 'OK'
+        });
+    }
+    return false; // prevent default submit for demo; remove if you want actual POST submit
+}
+
+// Attach login form submit event handler that uses LogIn()
+document.getElementById('loginForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+    LogIn();
+});
+
+// Toggle between signup and login forms
+function toggleForms() {
+    const signupBox = document.getElementById('signupBox');
+    const loginBox = document.getElementById('loginBox');
+
+    if (signupBox.style.display === 'none') {
+        signupBox.style.display = 'block';
+        loginBox.style.display = 'none';
+    } else {
+        signupBox.style.display = 'none';
+        loginBox.style.display = 'block';
+    }
+}
+
+// Forgot Password handler
+function forgotPassword() {
+    Swal.fire({
+        title: 'Forgot Password',
+        input: 'email',
+        inputLabel: 'Enter your email address',
+        inputPlaceholder: 'your@example.com',
+        showCancelButton: true,
+        confirmButtonText: 'Send Reset Link',
+        preConfirm: (email) => {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire('Email Sent!', 'Check your inbox for a reset link.', 'success');
+        }
+    });
+}
+
+// Password visibility toggle for login form
+document.querySelectorAll('.toggle-password').forEach(icon => {
+    icon.addEventListener('click', function () {
+        const input = document.querySelector(this.getAttribute('toggle'));
+        const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+        input.setAttribute('type', type);
+        this.classList.toggle('fa-eye-slash');
+    });
+});

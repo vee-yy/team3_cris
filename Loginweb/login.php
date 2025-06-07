@@ -17,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Assuming you store hashed passwords:
         if (password_verify($password, $user['password'])) {
             $_SESSION['user_id'] = $user['id'];
-            header("Location: Certificate.html");
+            header("Location: ../Certificate.html");
             exit();
         } else {
             echo "Invalid password.";
