@@ -18,7 +18,6 @@
 
             $sql = "INSERT INTO users(username,email,password) VALUES ('$username','$email','$hashed_password')";
             if($conn->query($sql)===TRUE){
-                echo "Account is created!";
                 header("Location: LoginPage.html");
                 exit();
             } else {
