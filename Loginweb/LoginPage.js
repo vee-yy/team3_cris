@@ -86,7 +86,7 @@ function LogIn() {
                 text: `Welcome, ${data.username}!`,
                 confirmButtonText: 'OK'
             }).then(() => {
-                window.location.href = '../Certification/Certificate.html';
+                window.location.href = '../Certification/Certificate.php';
             });
         } else {
             Swal.fire({

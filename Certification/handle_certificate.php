@@ -2,247 +2,359 @@
 session_start();
 include "../connect.php";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_SESSION['user_id'])) {
-        $_SESSION['user_id'] = 1; // For testing
+        http_response_code(401);
+        echo "User not logged in.";
+        exit;
     }
 
     $user_id = $_SESSION['user_id'];
-    $certificateType = $_POST['certificateType'];
+    $certificateType = $_POST['certificateType'] ?? '';
 
-    if ($certificateType === 'birth') {
-        // BIRTH CERTIFICATE
-        $child_firstname = $_POST['birthFirstname'];
-        $child_middlename = $_POST['birthMiddleInitial'];
-        $child_lastname = $_POST['birthLastname'];
-        $child_suffix = $_POST['birthSuffix'];
-        $child_date_birth = $_POST['birthDateOfBirth'];
-        $child_place_birth = $_POST['birthPlaceOfBirth'];
-        $sexual_orientation = $_POST['birthOrientation'];
-        $nationality = $_POST['birthNationality'];
+    if ($certificateType === 'Birth Certificate') {
+        $birthFirstName = $_POST['birthFirstName'] ?? '';
+        $birthLastName = $_POST['birthLastName'] ?? '';
+        $birthMiddleInitial = $_POST['birthMiddleInitial'] ?? '';
+        $birthSuffix = $_POST['birthSuffix'] ?? '';
+        $birthDateOfBirth = $_POST['birthDateOfBirth'] ?? '';
+        $birthPlaceOfBirth = $_POST['birthPlaceOfBirth'] ?? '';
+        $birthOrientation = $_POST['birthOrientation'] ?? '';
+        $birthNationality = $_POST['birthNationality'] ?? '';
 
-        $mother_firstname = $_POST['birthMotherMaidenName'];
-        $mother_middlename = $_POST['birthMotherMiddleInitial'];
-        $mother_lastname = $_POST['birthMotherLastName'];
+        $birthMotherMaidenName = $_POST['birthMotherMaidenName'] ?? '';
+        $birthMotherLastName = $_POST['birthMotherLastName'] ?? '';
+        $birthMotherMiddleInitial = $_POST['birthMotherMiddleInitial'] ?? '';
 
-        $father_firstname = $_POST['birthFatherFirstName'];
-        $father_middlename = $_POST['birthFatherMiddleInitial'];
-        $father_lastname = $_POST['birthFatherLastName'];
-        $father_suffix = $_POST['birthFatherSuffix'];
+        $birthFatherFirstName = $_POST['birthFatherFirstName'] ?? '';
+        $birthFatherLastName = $_POST['birthFatherLastName'] ?? '';
+        $birthFatherMiddleInitial = $_POST['birthFatherMiddleInitial'] ?? '';
+        $birthFatherSuffix = $_POST['birthFatherSuffix'] ?? '';
 
-        $purpose_certi = $_POST['birthPurpose'];
-        $number_copies = $_POST['birthCopiesNeeded'];
+        $birthPurpose = $_POST['birthPurpose'] ?? '';
+        $birthCopiesNeeded = (int)($_POST['birthCopiesNeeded'] ?? 0);
 
         $sql = "INSERT INTO birth_certi (
-                    user_id, status,
-                    child_firstname, child_middlename, child_lastname, child_suffix,
-                    child_date_birth, child_place_birth, sexual_orientation, nationality,
-                    mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
-                    father_firstname, father_middlename, father_lastname, father_suffix,
-                    purpose_certi, number_copies, created_at
-                ) VALUES (
-                    ?, 'PENDING',
-                    ?, ?, ?, ?, ?, ?, ?, ?,
-                    ?, ?, ?,
-                    ?, ?, ?, ?,
-                    ?, ?, NOW()
-                )";
+            user_id,
+            child_firstname, child_middlename, child_lastname, child_suffix,
+            child_date_birth, child_place_birth, sexual_orientation, nationality,
+            mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
+            father_firstname, father_middlename, father_lastname, father_suffix,
+            purpose_certi, number_copies, created_at
+        ) VALUES (
+            ?,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, NOW()
+        )";
 
         $stmt = $conn->prepare($sql);
+        if (!$stmt) {
+            http_response_code(500);
+            echo "Failed to prepare statement: " . $conn->error;
+            exit;
+        }
+
         $stmt->bind_param(
-            "isssssssssssssssssi",
+            "issssssssssssssssi",
             $user_id,
-            $child_firstname, $child_middlename, $child_lastname, $child_suffix,
-            $child_date_birth, $child_place_birth, $sexual_orientation, $nationality,
-            $mother_firstname, $mother_middlename, $mother_lastname,
-            $father_firstname, $father_middlename, $father_lastname, $father_suffix,
-            $purpose_certi, $number_copies
+            $birthFirstName,
+            $birthMiddleInitial,
+            $birthLastName,
+            $birthSuffix,
+            $birthDateOfBirth,
+            $birthPlaceOfBirth,
+            $birthOrientation,
+            $birthNationality,
+            $birthMotherMaidenName,
+            $birthMotherMiddleInitial,
+            $birthMotherLastName,
+            $birthFatherFirstName,
+            $birthFatherMiddleInitial,
+            $birthFatherLastName,
+            $birthFatherSuffix,
+            $birthPurpose,
+            $birthCopiesNeeded
         );
 
-    } elseif ($certificateType === 'death') {
-        // DEATH CERTIFICATE
-        $dead_firstname = $_POST['deathFirstName'];
-        $dead_middlename = $_POST['deathMiddleInitial'];
-        $dead_lastname = $_POST['deathLastName'];
-        $dead_suffix = $_POST['deathSuffix'];
-        $date_birth = $_POST['birthofdeath'];
-        $date_death = $_POST['deathDateOfDeath'];
-        $sexual_orientation = $_POST['deathOrientation'];
-        $nationality = $_POST['deathNationality'];
-        $place_death = $_POST['deathCompleteAddress'];
-        $purpose_certi = $_POST['deathPurpose'];
-        $number_copies = $_POST['deathCopiesNeeded'];
+        $stmt->execute();
+        $cert_id = $conn->insert_id;
+        $message_cert = "Birth certificate";
 
-        $sql = "INSERT INTO death_certi (
-                    user_id, status,
-                    dead_firstname, dead_middlename, dead_lastname, dead_suffix,
-                    date_birth, date_death, sexual_orientation, nationality, place_death,
-                    purpose_certi, number_copies, created_at
-                ) VALUES (
-                    ?, 'PENDING',
-                    ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?,
-                    ?, ?, NOW()
-                )";
+    } elseif ($certificateType === 'Marriage Certificate') {
+        $wife_firstname = $_POST['marriageWifefirst'] ?? '';
+        $wife_middlename = $_POST['marriageWifeMiddle'] ?? '';
+        $wife_lastname = $_POST['marriageWifelast'] ?? '';
 
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param(
-    "isssssssssssi",
-    $user_id, $dead_firstname, $dead_middlename, $dead_lastname, $dead_suffix,
-    $date_birth, $date_death, $sexual_orientation, $nationality, $place_death,
-    $purpose_certi, $number_copies
-);
+        $husband_firstname = $_POST['marriageHusbandfirst'] ?? '';
+        $husband_middlename = $_POST['marriageHusbandmiddle'] ?? '';
+        $husband_lastname = $_POST['marriageHusbandlast'] ?? '';
+        $husband_suffix = $_POST['marriageHusbandSuffix'] ?? '';
 
-    } elseif ($certificateType === 'marriage') {
-        // MARRIAGE CERTIFICATE
-        $wife_firstname = $_POST['marriageWifefirst'];
-        $wife_middle_name = $_POST['marriageWifeMiddle'];
-        $wife_lastname = $_POST['marriageWifelast'];
+        $date_of_marriage = $_POST['marriageDateOfMarriage'] ?? '';
+        $place_of_marriage = $_POST['marriagePlaceOfMarriage'] ?? '';
 
-        $husband_firstname = $_POST['marriageHusbandfirst'];
-        $husband_middle_name = $_POST['marriageHusbandmiddle'];
-        $husband_lastname = $_POST['marriageHusbandlast'];
-        $husband_suffix = $_POST['marriageHusbandSuffix'];
+        $wife_nationality = $_POST['marriageWifeNationality'] ?? '';
+        $husband_nationality = $_POST['marriageHusbandNationality'] ?? '';
 
-        $date_marriage = $_POST['marriageDateOfMarriage'];
-        $place_marriage = $_POST['marriagePlaceOfMarriage'];
-        $wife_nationality = $_POST['marriageWifeNationality'];
-        $husband_nationality = $_POST['marriageHusbandNationality'];
-        $purpose_certi = $_POST['marriagePurpose'];
-        $number_copies = $_POST['marriageCopiesNeeded'];
+        $purpose_certi = $_POST['marriagePurpose'] ?? '';
+        $number_copies = (int)($_POST['marriageCopiesNeeded'] ?? 0);
 
         $sql = "INSERT INTO marriage_certi (
-                    user_id, status,
-                    wife_firstname, wife_middle_name, wife_lastname,
-                    husband_firstname, husband_middle_name, husband_lastname, husband_suffix,
-                    date_marriage, place_marriage,
-                    wife_nationality, husband_nationality,
-                    purpose_certi, number_copies, created_at
-                ) VALUES (
-                    ?, 'PENDING',
-                    ?, ?, ?,
-                    ?, ?, ?, ?,
-                    ?, ?,
-                    ?, ?,
-                    ?, ?, NOW()
-                )";
+        user_id,
+        wife_firstname, wife_middle_name, wife_lastname,
+        husband_firstname, husband_middle_name, husband_lastname, husband_suffix,
+        date_marriage, place_marriage,
+        wife_nationality, husband_nationality,
+        purpose_certi, number_copies, created_at
+    ) VALUES (
+        ?,
+        ?, ?, ?,
+        ?, ?, ?, ?,
+        ?, ?,
+        ?, ?,
+        ?, ?, NOW()
+    )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
             "issssssssssssi",
             $user_id,
-            $wife_firstname, $wife_middle_name, $wife_lastname,
-            $husband_firstname, $husband_middle_name, $husband_lastname, $husband_suffix,
-            $date_marriage, $place_marriage,
-            $wife_nationality, $husband_nationality,
-            $purpose_certi, $number_copies
+            $wife_firstname,
+            $wife_middlename,
+            $wife_lastname,
+            $husband_firstname,
+            $husband_middlename,
+            $husband_lastname,
+            $husband_suffix,
+            $date_of_marriage,
+            $place_of_marriage,
+            $wife_nationality,
+            $husband_nationality,
+            $purpose_certi,
+            $number_copies
         );
 
-    } elseif ($certificateType === 'cenomar') {
-        // CENOMAR
-        $child_firstname = $_POST['cenomarChildFirstName'];
-        $child_middlename = $_POST['cenomarChildMiddleInitial'];
-        $child_lastname = $_POST['cenomarChildLastName'];
-        $child_suffix = $_POST['cenomarChildSuffix'];
-        $date_birth = $_POST['cenomarDateOfBirth'];
-        $place_birth = $_POST['cenomarPlaceOfBirth'];
-        $sexual_orientation = $_POST['cenomarOrientation'];
-        $child_nationality = $_POST['cenomarNationality'];
+        $stmt->execute();
+        $cert_id = $conn->insert_id;
+        $message_cert = "Marriage certificate";
+        
 
-        $mother_firstname = $_POST['cenomarMotherFirstName'];
-        $mother_middlename = $_POST['cenomarMotherMiddleInitial'];
-        $mother_lastname = $_POST['cenomarMotherLastName'];
+    } elseif ($certificateType === 'Death Certificate') {
+        $dead_firstname = $_POST['deathFirstName'] ?? '';
+        $dead_middlename = $_POST['deathMiddleInitial'] ?? '';
+        $dead_lastname = $_POST['deathLastName'] ?? '';
+        $dead_suffix = $_POST['deathSuffix'] ?? '';
+        $date_birth = $_POST['birthofdeath'] ?? '';
+        $date_death = $_POST['deathDateOfDeath'] ?? '';
+        $sexual_orientation = $_POST['deathOrientation'] ?? '';
+        $nationality = $_POST['deathNationality'] ?? '';
+        $place_death = $_POST['deathCompleteAddress'] ?? '';
+        $purpose_certi = $_POST['deathPurpose'] ?? '';
+        $number_copies = (int)($_POST['deathCopiesNeeded'] ?? 0);
 
-        $father_firstname = $_POST['cenomarFatherFirstName'];
-        $father_middlename = $_POST['cenomarFatherMiddleInitial'];
-        $father_lastname = $_POST['cenomarFatherLastname'];
-        $father_suffix = $_POST['cenomarFatherSuffix'];
-
-        $address = $_POST['cenomarCompleteAddress'];
-        $purpose_certi = $_POST['cenomarPurpose'];
-        $number_copies = $_POST['cenomarCopiesNeeded'];
-
-        $sql = "INSERT INTO cenomar_certi (
-                    user_id, status,
-                    child_firstname, child_middlename, child_lastname, child_suffix,
-                    mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
-                    father_firstname, father_middlename, father_lastname, father_suffix,
-                    date_birth, place_birth, address, purpose_certi, number_copies, created_at
-                ) VALUES (
-                    ?, 'PENDING',
-                    ?, ?, ?, ?,
-                    ?, ?, ?,
-                    ?, ?, ?, ?,
-                    ?, ?, ?, ?, NOW()
-                )";
+        $sql = "INSERT INTO death_certi (
+            user_id,
+            dead_firstname, dead_middlename, dead_lastname, dead_suffix,
+            date_birth, date_death, sexual_orientation, nationality, place_death,
+            purpose_certi, number_copies, created_at
+        ) VALUES (
+            ?,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?, ?,
+            ?, ?, NOW()
+        )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "isssssssssssssssii",
-            $user_id, $child_firstname, $child_middlename, $child_lastname, $child_suffix,
-            $mother_firstname, $mother_middlename, $mother_lastname,
-            $father_firstname, $father_middlename, $father_lastname, $father_suffix,
-            $date_birth, $place_birth, $address, $number_copies
+            "issssssssssi",
+            $user_id,
+            $dead_firstname,
+            $dead_middlename,
+            $dead_lastname,
+            $dead_suffix,
+            $date_birth,
+            $date_death,
+            $sexual_orientation,
+            $nationality,
+            $place_death,
+            $purpose_certi,
+            $number_copies
         );
+        $stmt->execute();
 
-    } elseif ($certificateType === 'cenodeath') {
-        // CENODEATH
-        $deceased_firstname = $_POST['cenodeathFirstName'];
-        $deceased_middlename = $_POST['cenodeathMiddleInitial'];
-        $deceased_lastname = $_POST['cenodeathLastName'];
-        $deceased_suffix = $_POST['cenodeathSuffix'];
-        $date_birth = $_POST['cenodeathDateOfBirth'];
-        $place_birth = $_POST['cenodeathPlaceOfBirth'];
-        $sexual_orientation = $_POST['cenodeathOrientation'];
-        $nationality = $_POST['cenodeathNationality'];
+        $cert_id = $conn->insert_id;
+        $message_cert = "Death certificate";
 
-        $mother_firstname = $_POST['cenodeathMotherFirstName'];
-        $mother_middlename = $_POST['cenodeathMotherMiddleInitial'];
-        $mother_lastname = $_POST['cenodeathMotherLastName'];
+    } elseif ($certificateType === 'Cenomar Certificate') {
+        $child_firstname = $_POST['cenomarChildFirstName'] ?? '';
+        $child_middlename = $_POST['cenomarChildMiddleInitial'] ?? '';
+        $child_lastname = $_POST['cenomarChildLastName'] ?? '';
+        $child_suffix = $_POST['cenomarChildSuffix'] ?? '';
+        $date_birth = $_POST['cenomarDateOfBirth'] ?? '';
+        $place_birth = $_POST['cenomarPlaceOfBirth'] ?? '';
+        $sexual_orientation = $_POST['cenomarOrientation'] ?? '';
+        $child_nationality = $_POST['cenomarNationality'] ?? '';
 
-        $father_firstname = $_POST['cenodeathFatherFirstName'];
-        $father_middlename = $_POST['cenodeathFatherMiddleInitial'];
-        $father_lastname = $_POST['cenodeathFatherLastName'];
-        $father_suffix = $_POST['cenodeathFatherSuffix'];
+        $mother_firstname = $_POST['cenomarMotherFirstName'] ?? '';
+        $mother_middlename = $_POST['cenomarMotherMiddleInitial'] ?? '';
+        $mother_lastname = $_POST['cenomarMotherLastName'] ?? '';
 
-        $address = $_POST['cenodeathCompleteAddress'];
-        $purpose_cert = $_POST['cenodeathPurpose'];
-        $number_copies = $_POST['cenodeathCopiesNeeded'];
+        $father_firstname = $_POST['cenomarFatherFirstName'] ?? '';
+        $father_middlename = $_POST['cenomarFatherMiddleInitial'] ?? '';
+        $father_lastname = $_POST['cenomarFatherLastName'] ?? '';
+        $father_suffix = $_POST['cenomarFatherSuffix'] ?? '';
 
-        $sql = "INSERT INTO cenodeath_certi (
-                    user_id, status,
-                    deceased_firstname, deceased_middlename, deceased_lastname, deceased_suffix,
-                    mother_firstname, mother_middlename, mother_lastname,
-                    father_firstname, father_middlename, father_lastname, father_suffix,
-                    date_birth, place_birth, address, purpose_cert, number_copies, created_at
-                ) VALUES (
-                    ?, 'PENDING',
-                    ?, ?, ?, ?,
-                    ?, ?, ?,
-                    ?, ?, ?, ?,
-                    ?, ?, ?, ?, ?, NOW()
-                )";
+        $address = $_POST['cenomarCompleteAddress'] ?? '';
+        $number_copies = (int)($_POST['cenomarCopiesNeeded'] ?? 0);
+
+        $sql = "INSERT INTO cenomar_certi (
+        user_id,
+        child_firstname, child_middlename, child_lastname, child_suffix,
+        mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
+        father_firstname, father_middlename, father_lastname, father_suffix,
+        date_birth, place_birth, sexual_orientation, nationality,
+        address, number_copies, created_at
+    ) VALUES (
+        ?,
+        ?, ?, ?, ?,
+        ?, ?, ?,
+        ?, ?, ?, ?,
+        ?, ?, ?, ?,
+        ?, ?, NOW()
+    )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
             "issssssssssssssssi",
             $user_id,
-            $deceased_firstname, $deceased_middlename, $deceased_lastname, $deceased_suffix,
-            $mother_firstname, $mother_middlename, $mother_lastname,
-            $father_firstname, $father_middlename, $father_lastname, $father_suffix,
-            $date_birth, $place_birth, $address, $purpose_cert, $number_copies
+            $child_firstname,
+            $child_middlename,
+            $child_lastname,
+            $child_suffix,
+            $mother_firstname,
+            $mother_middlename,
+            $mother_lastname,
+            $father_firstname,
+            $father_middlename,
+            $father_lastname,
+            $father_suffix,
+            $date_birth,
+            $place_birth,
+            $sexual_orientation,
+            $child_nationality,
+            $address,
+            $number_copies
         );
-    }
+        $stmt->execute();
 
+        $cert_id = $conn->insert_id;
+        $message_cert = "Cenomar certificate";
 
-    if (isset($stmt) && $stmt->execute()) {
-        echo ucfirst($certificateType) . " certificate submitted successfully.";
+    } elseif ($certificateType === 'Cenodeath Certificate') {
+        $deceased_firstname = $_POST['cenodeathFirstName'] ?? '';
+        $deceased_middlename = $_POST['cenodeathMiddleInitial'] ?? '';
+        $deceased_lastname = $_POST['cenodeathLastName'] ?? '';
+        $deceased_suffix = $_POST['cenodeathSuffix'] ?? '';
+        $date_birth = $_POST['cenodeathDateOfBirth'] ?? '';
+        $place_birth = $_POST['cenodeathPlaceOfBirth'] ?? '';
+        $sexual_orientation = $_POST['cenodeathOrientation'] ?? '';
+        $nationality = $_POST['cenodeathNationality'] ?? '';
+
+        $mother_firstname = $_POST['cenodeathMotherFirstName'] ?? '';
+        $mother_middlename = $_POST['cenodeathMotherMiddleInitial'] ?? '';
+        $mother_lastname = $_POST['cenodeathMotherLastName'] ?? '';
+
+        $father_firstname = $_POST['cenodeathFatherFirstName'] ?? '';
+        $father_middlename = $_POST['cenodeathFatherMiddleInitial'] ?? '';
+        $father_lastname = $_POST['cenodeathFatherLastName'] ?? '';
+        $father_suffix = $_POST['cenodeathFatherSuffix'] ?? '';
+
+        $address = $_POST['cenodeathCompleteAddress'] ?? '';
+        $purpose_cert = $_POST['cenodeathPurpose'] ?? '';
+        $number_copies = (int)($_POST['cenodeathCopiesNeeded'] ?? 0);
+
+        $sql = "INSERT INTO cenodeath_certi (
+            user_id,
+            deceased_firstname, deceased_middlename, deceased_lastname, deceased_suffix,
+            mother_firstname, mother_middlename, mother_lastname,
+            father_firstname, father_middlename, father_lastname, father_suffix,
+            date_birth, place_birth, address, purpose_cert, number_copies, created_at
+        ) VALUES (
+            ?,
+            ?, ?, ?, ?,
+            ?, ?, ?,
+            ?, ?, ?, ?,
+            ?, ?, ?, ?, ?, NOW()
+        )";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param(
+            "isssssssssssssssi",
+            $user_id,
+            $deceased_firstname,
+            $deceased_middlename,
+            $deceased_lastname,
+            $deceased_suffix,
+            $mother_firstname,
+            $mother_middlename,
+            $mother_lastname,
+            $father_firstname,
+            $father_middlename,
+            $father_lastname,
+            $father_suffix,
+            $date_birth,
+            $place_birth,
+            $address,
+            $purpose_cert,
+            $number_copies
+        );
+        $stmt->execute();
+
+        $cert_id = $conn->insert_id;
+        $message_cert = "Cenodeath certificate";
+
     } else {
-        echo "Error: " . ($stmt ? $stmt->error : "No statement prepared");
+        http_response_code(400);
+        echo "Invalid certificate type.";
     }
 
-    if (isset($stmt)) $stmt->close();
+   // Get latest reg_id
+    $lastRegIdSql = "SELECT reg_id FROM document ORDER BY CAST(SUBSTRING(reg_id, 5) AS UNSIGNED) DESC LIMIT 1";
+    $result = $conn->query($lastRegIdSql);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $lastRegId = $row['reg_id'];
+        $num = intval(substr($lastRegId, 4));
+        $nextNum = $num + 1;
+    } else {
+        $nextNum = 1;
+    }
+
+    $newRegId = 'REG-' . str_pad($nextNum, 5, '0', STR_PAD_LEFT);
+
+    $doc_sql = "INSERT INTO document (reg_id, user_id, cert_id, certif_type, status) VALUES (?, ?, ?, ?, 'PENDING')";
+    $document_stmt = $conn->prepare($doc_sql);
+
+    if (!$document_stmt) {
+        http_response_code(500);
+        echo "Failed to prepare document statement: " . $conn->error;
+        exit;
+    }
+
+    $document_stmt->bind_param("siss", $newRegId, $user_id, $cert_id, $certificateType);
+
+    if ($document_stmt->execute()) {
+        echo $message_cert . " submitted successfully with registration ID: $newRegId.";
+    } else {
+        http_response_code(500);
+        echo "Error executing document insert: " . $document_stmt->error;
+    }
+
+    $stmt->close();
+    $document_stmt->close();
     $conn->close();
 }
-?>
-
