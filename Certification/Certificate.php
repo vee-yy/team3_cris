@@ -568,7 +568,7 @@ $result_full = $stmt->get_result();
                         <input type="text" id="cenomarCompleteAddress" name="cenomarCompleteAddress"
                             placeholder="Complete Address" />
 
-                        <!-- <label for="cenomarPurpose">Purpose of the certification</label><br>
+                         <label for="cenomarPurpose">Purpose of the certification</label><br>
                         <select name="cenomarPurpose" id="cenomarPurpose">
                             <option value="">-- Select --</option>
                             <option value="proof_no_death_record">Proof of No Death Record</option>
@@ -576,7 +576,7 @@ $result_full = $stmt->get_result();
                             <option value="demonstrating_potential_alive_status">Demonstrating Potential Alive Status
                             </option>
                             <option value="others">Others</option>
-                        </select> -->
+                        </select> 
                         <br>
                         <br>
 
@@ -715,7 +715,7 @@ $result_full = $stmt->get_result();
                 <thead>
                     <tr>
                         <th>ID Number</th>
-                        <th>Full Name</th>
+                        <th>UserName</th>
                         <th>Certificate Type</th>
                         <th>Status</th>
                     </tr>

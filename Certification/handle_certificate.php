@@ -206,7 +206,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $father_middlename = $_POST['cenomarFatherMiddleInitial'] ?? '';
         $father_lastname = $_POST['cenomarFatherLastName'] ?? '';
         $father_suffix = $_POST['cenomarFatherSuffix'] ?? '';
-
+        $purpose_cert = $_POST['cenomarPurpose'] ?? '';
         $address = $_POST['cenomarCompleteAddress'] ?? '';
         $number_copies = (int)($_POST['cenomarCopiesNeeded'] ?? 0);
 
@@ -216,19 +216,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
         father_firstname, father_middlename, father_lastname, father_suffix,
         date_birth, place_birth, sexual_orientation, nationality,
-        address, number_copies, created_at
+        address, purpose_certi, number_copies, created_at
     ) VALUES (
         ?,
         ?, ?, ?, ?,
         ?, ?, ?,
         ?, ?, ?, ?,
         ?, ?, ?, ?,
-        ?, ?, NOW()
+        ?, ?, ?, NOW()
     )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "issssssssssssssssi",
+            "isssssssssssssssssi",
             $user_id,
             $child_firstname,
             $child_middlename,
@@ -245,6 +245,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $place_birth,
             $sexual_orientation,
             $child_nationality,
+            $purpose_cert,
             $address,
             $number_copies
         );

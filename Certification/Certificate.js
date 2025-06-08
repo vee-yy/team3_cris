@@ -122,12 +122,13 @@ function openForm(type) {
         title: 'Terms & Conditions',
         html: `<div style="text-align: left;">
       <p style="margin-bottom: 1rem;">By proceeding, you agree to:</p>
-      <ul style="margin-left: 1.2rem; padding-left: 1rem; list-style-type: disc;">
-        <li style="margin-bottom: 0.5rem;">Provide accurate and truthful information</li>
-        <li style="margin-bottom: 0.5rem;">Upload authentic documents only</li>
-        <li style="margin-bottom: 0.5rem;">Pay applicable fees</li>
-        <li><strong>Allow processing time of 3–10 business days</strong></li>
-      </ul>
+        <ul style="margin-left: 1.2rem; padding-left: 1rem; list-style-type: disc;">
+          <li style="margin-bottom: 0.5rem;">Ensure all information provided is accurate and truthful</li>
+          <li style="margin-bottom: 0.5rem;">Only upload valid and authentic supporting documents</li>
+          <li style="margin-bottom: 0.5rem;">Settle any applicable fees in a timely manner</li>
+          <li><strong>Please allow 3–10 business days for processing</strong></li>
+          <li>If a field does not apply to you, enter <strong>N/A.</strong></li>
+        </ul>
       <div style="margin-top: 1.5rem;">
         <input type="checkbox" id="termsCheckbox" style="margin-right: 0.5rem;" />
         <label for="termsCheckbox">I have read and agree to the Terms & Conditions</label>
