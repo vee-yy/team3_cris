@@ -50,6 +50,43 @@ body{
   border: 2px solid #ecf0f1;
 }
 
+#userIconContainer {
+  display: none;
+  position: relative;
+}
+
+#userIcon {
+  font-size: 28px;
+  cursor: pointer;
+  color: #3b82f6;
+}
+
+#userDropdown {
+  display: none;
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 10px;
+  z-index: 100;
+}
+
+#userDropdown p {
+  margin: 0 0 5px;
+}
+
+#userDropdown button {
+  padding: 4px 10px;
+  background-color: #f5f5f5;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+
 .search-tab {
   position: absolute;
   left: 50%;
@@ -264,12 +301,10 @@ body{
   font-size: 0.75rem;
   padding: 0.25rem 0.5rem;
   border-radius: 9999px;
-  display: inline-flex; /* enables icon + text alignment */
+  display: inline-flex;
   align-items: center;
-  gap: 0.25rem; /* spacing between icon and text */
+  gap: 0.25rem;
 }
-
-
 
 .popup-overlay {
   position: fixed;
@@ -307,6 +342,14 @@ body{
   font-size: 16px;
 }
 
+.popup-content form input:focus,
+.popup-content form select:focus {
+  border: 2px solid #18d50e !important;
+  box-shadow: 0 0 5px #3b82f6 !important;
+  background-color: #f0f8ff !important;
+  outline: none !important;
+}
+
 .popup-content form button {
   background-color: #007BFF;
   color: white;
@@ -320,7 +363,6 @@ body{
   background-color: #0056b3;
 }
 
-/* Left side: Previous button */
 #prevBtn {
   width: auto !important;
   margin-top: 20px;
@@ -334,7 +376,6 @@ body{
   background-color: #5a6268;
 }
 
-/* Right side: Stack Download and Submit */
 #downloadBtn {
   order: 2;
   display: block;
@@ -369,11 +410,11 @@ body{
   background-color: #218838;
 }
 
-.popup-content form button#nextBtn {
-  width: 150px;            /* Allow natural button width */
-  padding: 10px 20px;     /* Wider left/right padding */
-  margin-top: 20px;
-  float: right;           /* Align right inside the form */
+#nextBtn {
+  width: 150px;            
+  float: right; 
+  margin-bottom: 20px;
+  margin-top: -20px;
 }
 
 .close-btn {
@@ -385,7 +426,6 @@ body{
   font-weight: bold;
 }
 
-/* Progress Bar Container */
   .progressbar {
   display: flex;
   justify-content: space-between;
@@ -447,8 +487,7 @@ body{
   background-color: #27ae60;
 }
 
-  /* Form Step */
-
+  /* Form START */
 
 .form-step {
   display: none;
@@ -540,6 +579,18 @@ textarea {
   padding: 20px;
 }
 
+.delivery-info{
+  background-color: #eff6ff;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-bottom: 40px;
+  padding: 20px;
+}
+
+#deliveryOption{
+  width: 30%;
+}
+
 /* Birth Birthdate - Place of Birth - Purpose */
 
 #info{
@@ -611,7 +662,6 @@ label[for="birthOrientation"] {
   display: flex;
   flex-direction: column;
 }
-/* Birth purpose End */
 
 #marriageFields label {
   font-weight: bold;
@@ -641,6 +691,7 @@ label[for="birthOrientation"] {
 .review-item .label {
   font-weight: bold;
   color: #333;
+  margin: 10px;
 }
 
 .review-item .value {
@@ -649,7 +700,6 @@ label[for="birthOrientation"] {
   max-width: 50%;
   word-break: break-word;
 }
-
 
 /* TABLE - START */
 
@@ -733,4 +783,76 @@ label[for="birthOrientation"] {
 }
 .action-btn:hover {
   background-color: #1d4ed8;
+}
+
+#pdfTemplate {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 30px;
+  width: 700px;
+  height: 1123px;
+  font-family: Arial, sans-serif;
+  border: 2px solid #3b82f6;
+  box-sizing: border-box;
+  position: relative;
+  display: none;
+}
+
+#pdfTemplate::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-image: url('../resources/Logo.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  opacity: 0.20;
+  pointer-events: none;
+  z-index: 0;
+}
+
+#pdfTemplate > * {
+  position: relative;
+  z-index: 1;
+}
+
+#pdfTemplate h2 {
+  text-align: center;
+  color: #3b82f6;
+  margin-bottom: 20px;
+}
+
+#pdfCertType{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+#pdfDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  padding-left: 10px;
+  padding-right: 10px;
+  flex-grow: 1;
+}
+
+#pdfDetails p {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+}
+
+.pdf-note {
+  font-size: 12px;
+  color: #777;
+  padding-top: 20px;
+  border-top: 1px solid #ccc;
+  margin-top: 20px;
+}
+
+.pdf-note p {
+  margin: 0;
 }

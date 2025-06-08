@@ -31,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $birthFatherMiddleInitial = $_POST['birthFatherMiddleInitial'] ?? '';
         $birthFatherSuffix = $_POST['birthFatherSuffix'] ?? '';
 
+        $address = $_POST['birthdeliveryAddress'] ?? '';
+        $address_option = $_POST['birthdeliveryOption'] ?? '';
         $birthPurpose = $_POST['birthPurpose'] ?? '';
         $birthCopiesNeeded = (int)($_POST['birthCopiesNeeded'] ?? 0);
 
@@ -40,14 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             child_date_birth, child_place_birth, sexual_orientation, nationality,
             mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
             father_firstname, father_middlename, father_lastname, father_suffix,
-            purpose_certi, number_copies, created_at
+            address, address_option, purpose_certi, number_copies, created_at
         ) VALUES (
             ?,
             ?, ?, ?, ?,
             ?, ?, ?, ?,
             ?, ?, ?,
             ?, ?, ?, ?,
-            ?, ?, NOW()
+            ?, ?, ?, ?, NOW()
         )";
 
         $stmt = $conn->prepare($sql);
@@ -58,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         $stmt->bind_param(
-            "issssssssssssssssi",
+            "issssssssssssssssssi",
             $user_id,
             $birthFirstName,
             $birthMiddleInitial,
@@ -75,6 +77,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $birthFatherMiddleInitial,
             $birthFatherLastName,
             $birthFatherSuffix,
+            $address,
+            $address_option,
             $birthPurpose,
             $birthCopiesNeeded
         );
@@ -99,6 +103,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $wife_nationality = $_POST['marriageWifeNationality'] ?? '';
         $husband_nationality = $_POST['marriageHusbandNationality'] ?? '';
 
+        $address = $_POST['marriagedeliveryAddress'] ?? '';
+        $address_option = $_POST['marriagedeliveryOption'] ?? '';
         $purpose_certi = $_POST['marriagePurpose'] ?? '';
         $number_copies = (int)($_POST['marriageCopiesNeeded'] ?? 0);
 
@@ -108,19 +114,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         husband_firstname, husband_middle_name, husband_lastname, husband_suffix,
         date_marriage, place_marriage,
         wife_nationality, husband_nationality,
-        purpose_certi, number_copies, created_at
+        address, address_option, purpose_certi, number_copies, created_at
     ) VALUES (
         ?,
         ?, ?, ?,
         ?, ?, ?, ?,
         ?, ?,
         ?, ?,
-        ?, ?, NOW()
+        ?, ?, ?, ?, NOW()
     )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "issssssssssssi",
+            "issssssssssssssi",
             $user_id,
             $wife_firstname,
             $wife_middlename,
@@ -133,6 +139,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $place_of_marriage,
             $wife_nationality,
             $husband_nationality,
+            $address,
+            $address_option,
             $purpose_certi,
             $number_copies
         );
@@ -152,6 +160,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sexual_orientation = $_POST['deathOrientation'] ?? '';
         $nationality = $_POST['deathNationality'] ?? '';
         $place_death = $_POST['deathCompleteAddress'] ?? '';
+        $address = $_POST['deathdeliveryAddress'] ?? '';
+        $address_option = $_POST['deathdeliveryOption'] ?? '';
         $purpose_certi = $_POST['deathPurpose'] ?? '';
         $number_copies = (int)($_POST['deathCopiesNeeded'] ?? 0);
 
@@ -159,17 +169,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             user_id,
             dead_firstname, dead_middlename, dead_lastname, dead_suffix,
             date_birth, date_death, sexual_orientation, nationality, place_death,
-            purpose_certi, number_copies, created_at
+            address, address_option, purpose_certi, number_copies, created_at
         ) VALUES (
             ?,
             ?, ?, ?, ?,
             ?, ?, ?, ?, ?,
-            ?, ?, NOW()
+            ?, ?, ?, ?, NOW()
         )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "issssssssssi",
+            "issssssssssssi",
             $user_id,
             $dead_firstname,
             $dead_middlename,
@@ -180,6 +190,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $sexual_orientation,
             $nationality,
             $place_death,
+            $address,
+            $address_option,
             $purpose_certi,
             $number_copies
         );
@@ -206,34 +218,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $father_middlename = $_POST['cenomarFatherMiddleInitial'] ?? '';
         $father_lastname = $_POST['cenomarFatherLastName'] ?? '';
         $father_suffix = $_POST['cenomarFatherSuffix'] ?? '';
-        $purpose_cert = $_POST['cenomarPurpose'] ?? '';
-        $address = $_POST['cenomarCompleteAddress'] ?? '';
+
+        $address = $_POST['cenomardeliveryAddress'] ?? '';
+        $address_option = $_POST['cenomardeliveryOption'] ?? '';
+        $purpose_certi = $_POST['cenomarPurpose'] ?? '';
         $number_copies = (int)($_POST['cenomarCopiesNeeded'] ?? 0);
 
         $sql = "INSERT INTO cenomar_certi (
         user_id,
         child_firstname, child_middlename, child_lastname, child_suffix,
+        date_birth, place_birth, sexual_orientation, nationality,
         mother_maiden_firstname, mother_maiden_middlename, mother_maiden_lastname,
         father_firstname, father_middlename, father_lastname, father_suffix,
-        date_birth, place_birth, sexual_orientation, nationality,
-        address, purpose_certi, number_copies, created_at
+        address, address_option, purpose_certi, number_copies, created_at
     ) VALUES (
         ?,
         ?, ?, ?, ?,
+        ?, ?, ?, ?,
         ?, ?, ?,
         ?, ?, ?, ?,
-        ?, ?, ?, ?,
-        ?, ?, ?, NOW()
+        ?, ?, ?, ?, NOW()
     )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "isssssssssssssssssi",
+            "isssssssssssssssssssi",
             $user_id,
             $child_firstname,
             $child_middlename,
             $child_lastname,
             $child_suffix,
+            $date_birth,
+            $place_birth,
+            $sexual_orientation,
+            $child_nationality,
             $mother_firstname,
             $mother_middlename,
             $mother_lastname,
@@ -241,12 +259,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $father_middlename,
             $father_lastname,
             $father_suffix,
-            $date_birth,
-            $place_birth,
-            $sexual_orientation,
-            $child_nationality,
-            $purpose_cert,
             $address,
+            $address_option,
+            $purpose_cert,
             $number_copies
         );
         $stmt->execute();
@@ -273,8 +288,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $father_lastname = $_POST['cenodeathFatherLastName'] ?? '';
         $father_suffix = $_POST['cenodeathFatherSuffix'] ?? '';
 
-        $address = $_POST['cenodeathCompleteAddress'] ?? '';
-        $purpose_cert = $_POST['cenodeathPurpose'] ?? '';
+        $address = $_POST['cenodeathdeliveryAddress'] ?? '';
+        $purpose_certi = $_POST['cenodeathPurpose'] ?? '';
         $number_copies = (int)($_POST['cenodeathCopiesNeeded'] ?? 0);
 
         $sql = "INSERT INTO cenodeath_certi (
@@ -282,18 +297,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             deceased_firstname, deceased_middlename, deceased_lastname, deceased_suffix,
             mother_firstname, mother_middlename, mother_lastname,
             father_firstname, father_middlename, father_lastname, father_suffix,
-            date_birth, place_birth, address, purpose_cert, number_copies, created_at
+            date_birth, place_birth, address, address_option, purpose_certi, number_copies, created_at
         ) VALUES (
             ?,
             ?, ?, ?, ?,
             ?, ?, ?,
             ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, NOW()
+            ?, ?, ?, ?, ?, ?, NOW()
         )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "isssssssssssssssi",
+            "isssssssssssssssssi",
             $user_id,
             $deceased_firstname,
             $deceased_middlename,
@@ -309,7 +324,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $date_birth,
             $place_birth,
             $address,
-            $purpose_cert,
+            $address_option,
+            $purpose_certi,
             $number_copies
         );
         $stmt->execute();

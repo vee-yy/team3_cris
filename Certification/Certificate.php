@@ -313,6 +313,22 @@ $result_full = $stmt->get_result();
                             </div>
                         </div>
 
+                        <div class="delivery-info">
+                            <label id="info">Delivery Information</label><br><br>
+                            <label for="deliveryAddress">Address</label><br>
+                                <input type="text" id="deliveryAddress" name="birthdeliveryAddress" placeholder="Full delivery address" />
+                        <br>          
+                            <label for="deliveryOption">Delivery Options:</label>
+                        <br>
+                            <select name="birthdeliveryOption" id="deliveryOption">
+                                <option value="">-- Select --</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="pickup">Pick-up</option>
+                            </select>
+                        </div>
+
+
+
                         <label for="birthPurpose">Purpose of the certification</label><br>
                         <select name="birthPurpose" id="birthPurpose">
                             <option value="death_record">-- Select -- </option>
@@ -396,6 +412,21 @@ $result_full = $stmt->get_result();
                             </div>
                         </div>
 
+                        <div class="delivery-info">
+                            <label id="info">Delivery Information</label><br><br>
+                            <label for="deliveryAddress">Address</label><br>
+                                <input type="text" id="deliveryAddress" name="marriagedeliveryAddress" placeholder="Full delivery address" />
+                        <br>          
+                            <label for="deliveryOption">Delivery Options:</label>
+                        <br>
+                            <select name="marriagedeliveryOption" id="deliveryOption">
+                                <option value="">-- Select --</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="pickup">Pick-up</option>
+                            </select>
+                        </div>
+
+
                         <label for="marriagePurpose">Purpose of the certification</label><br>
                         <select name="marriagePurpose" id="marriagePurpose">
                             <option value="">-- Select --</option>
@@ -461,9 +492,23 @@ $result_full = $stmt->get_result();
                             </div>
                         </div>
 
-                        <label for="deathCompleteAddress">Place of Death</label>
+                        <!--<label for="deathCompleteAddress">Place of Death</label>
                         <input type="text" id="deathCompleteAddress" name="deathCompleteAddress"
                             placeholder="(e.g. Medical Hospital)" />
+                        -->
+                        <div class="delivery-info">
+                            <label id="info">Delivery Information</label><br><br>
+                            <label for="deliveryAddress">Address</label><br>
+                                <input type="text" id="deliveryAddress" name="deathdeliveryAddress" placeholder="Full delivery address" />
+                        <br>          
+                            <label for="deliveryOption">Delivery Options:</label>
+                        <br>
+                            <select name="deatheliveryOption" id="deliveryOption">
+                                <option value="">-- Select --</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="pickup">Pick-up</option>
+                            </select>
+                        </div>
 
                         <label for="deathPurpose">Purpose of the certification</label><br>
                         <select name="deathPurpose" id="deathPurpose">
@@ -564,9 +609,24 @@ $result_full = $stmt->get_result();
                             </div>
                         </div>
 
-                        <label for="cenomarCompleteAddress">Complete Address</label>
+                        <div class="delivery-info">
+                            <label id="info">Delivery Information</label><br><br>
+                            <label for="deliveryAddress">Address</label><br>
+                                <input type="text" id="deliveryAddress" name="cenomardeliveryAddress" placeholder="Full delivery address" />
+                        <br>          
+                            <label for="deliveryOption">Delivery Options:</label>
+                        <br>
+                            <select name="cenomardeliveryOption" id="deliveryOption">
+                                <option value="">-- Select --</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="pickup">Pick-up</option>
+                            </select>
+                        </div>
+
+                        <!--<label for="cenomarCompleteAddress">Complete Address</label>
                         <input type="text" id="cenomarCompleteAddress" name="cenomarCompleteAddress"
                             placeholder="Complete Address" />
+                        -->
 
                          <label for="cenomarPurpose">Purpose of the certification</label><br>
                         <select name="cenomarPurpose" id="cenomarPurpose">
@@ -668,9 +728,24 @@ $result_full = $stmt->get_result();
                             </div>
                         </div>
 
-                        <label for="cenodeathCompleteAddress">Complete Address</label>
+                        <div class="delivery-info">
+                            <label id="info">Delivery Information</label><br><br>
+                            <label for="deliveryAddress">Address</label><br>
+                                <input type="text" id="deliveryAddress" name="cenodeathdeliveryAddress" placeholder="Full delivery address" />
+                        <br>          
+                            <label for="deliveryOption">Delivery Options:</label>
+                        <br>
+                            <select name="cenodeathdeliveryOption" id="deliveryOption">
+                                <option value="">-- Select --</option>
+                                <option value="delivery">Delivery</option>
+                                <option value="pickup">Pick-up</option>
+                            </select>
+                        </div>
+
+                        <!--<label for="cenodeathCompleteAddress">Complete Address</label>
                         <input type="text" id="cenodeathCompleteAddress" name="cenodeathCompleteAddress"
                             placeholder="Complete Address" />
+                        -->
 
                         <label for="cenodeathPurpose">Purpose of the certification</label>
                         <select name="cenodeathPurpose" id="cenodeathPurpose">
