@@ -86,7 +86,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $cert_id = $conn->insert_id;
         $message_cert = "Birth certificate";
-
     } elseif ($certificateType === 'Marriage Certificate') {
         $wife_firstname = $_POST['marriageWifefirst'] ?? '';
         $wife_middlename = $_POST['marriageWifeMiddle'] ?? '';
@@ -148,8 +147,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->execute();
         $cert_id = $conn->insert_id;
         $message_cert = "Marriage certificate";
-        
-
     } elseif ($certificateType === 'Death Certificate') {
         $dead_firstname = $_POST['deathFirstName'] ?? '';
         $dead_middlename = $_POST['deathMiddleInitial'] ?? '';
@@ -199,7 +196,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $cert_id = $conn->insert_id;
         $message_cert = "Death certificate";
-
     } elseif ($certificateType === 'Cenomar Certificate') {
         $child_firstname = $_POST['cenomarChildFirstName'] ?? '';
         $child_middlename = $_POST['cenomarChildMiddleInitial'] ?? '';
@@ -241,8 +237,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     )";
 
         $stmt = $conn->prepare($sql);
+
         $stmt->bind_param(
-            "isssssssssssssssssssi",
+            "issssssssssssssssssi",
             $user_id,
             $child_firstname,
             $child_middlename,
@@ -261,14 +258,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $father_suffix,
             $address,
             $address_option,
-            $purpose_cert,
+            $purpose_certi,
             $number_copies
         );
+
         $stmt->execute();
 
         $cert_id = $conn->insert_id;
         $message_cert = "Cenomar certificate";
-
     } elseif ($certificateType === 'Cenodeath Certificate') {
         $deceased_firstname = $_POST['cenodeathFirstName'] ?? '';
         $deceased_middlename = $_POST['cenodeathMiddleInitial'] ?? '';
@@ -289,31 +286,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $father_suffix = $_POST['cenodeathFatherSuffix'] ?? '';
 
         $address = $_POST['cenodeathdeliveryAddress'] ?? '';
+        $address_option = $_POST['cenodeathdeliveryOption'] ?? '';
         $purpose_certi = $_POST['cenodeathPurpose'] ?? '';
         $number_copies = (int)($_POST['cenodeathCopiesNeeded'] ?? 0);
 
         $sql = "INSERT INTO cenodeath_certi (
             user_id,
             deceased_firstname, deceased_middlename, deceased_lastname, deceased_suffix,
+            sexual_orientation, nationality,
             mother_firstname, mother_middlename, mother_lastname,
             father_firstname, father_middlename, father_lastname, father_suffix,
-            date_birth, place_birth, address, address_option, purpose_certi, number_copies, created_at
+            date_birth, place_birth, address, address_option, purpose_cert, number_copies, created_at
         ) VALUES (
             ?,
             ?, ?, ?, ?,
+            ?, ?,
             ?, ?, ?,
-            ?, ?, ?, ?,
-            ?, ?, ?, ?, ?, ?, NOW()
+            ?, ?, ?, ?, 
+            ?, ?, ?, ?, ?, ?,
+            NOW()
         )";
 
         $stmt = $conn->prepare($sql);
         $stmt->bind_param(
-            "isssssssssssssssssi",
+            "isssssssssssssssssis",
             $user_id,
             $deceased_firstname,
             $deceased_middlename,
             $deceased_lastname,
             $deceased_suffix,
+            $sexual_orientation,
+            $nationality,
             $mother_firstname,
             $mother_middlename,
             $mother_lastname,
@@ -328,17 +331,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $purpose_certi,
             $number_copies
         );
+
+
         $stmt->execute();
 
         $cert_id = $conn->insert_id;
         $message_cert = "Cenodeath certificate";
-
     } else {
         http_response_code(400);
         echo "Invalid certificate type.";
     }
 
-   // Get latest reg_id
+    // Get latest reg_id
     $lastRegIdSql = "SELECT reg_id FROM document ORDER BY CAST(SUBSTRING(reg_id, 5) AS UNSIGNED) DESC LIMIT 1";
     $result = $conn->query($lastRegIdSql);
 

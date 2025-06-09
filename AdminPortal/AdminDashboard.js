@@ -1,110 +1,201 @@
-  let sampleData = [];  // will hold data from server
+let sampleData = [];
 
-  // Current state
-  let currentState = {
-    page: 1,
-    pageSize: 10,
-    totalItems: 0,  // updated after data loads
-    sortColumn: 'id',
-    sortDirection: 'asc',
-    searchQuery: '',
-    dateRange: { start: null, end: null },
-    dataType: 'all',
-    statusFilter: 'all'
-  };
+let currentState = {
+  page: 1,
+  pageSize: 10,
+  totalItems: 0,
+  sortColumn: 'id',
+  sortDirection: 'asc',
+  searchQuery: '',
+  dateRange: { start: null, end: null },
+  dataType: 'all',
+  statusFilter: 'all'
+};
 
-  document.addEventListener('DOMContentLoaded', function() {
-    fetch('getCertificates.php')
-      .then(res => res.json())
-      .then(data => {
-        sampleData = data;
-        currentState.totalItems = sampleData.length;
-        renderTable();
-        setupEventListeners();
-      })
-      .catch(error => {
-        console.error('Error loading data:', error);
-      });
+document.addEventListener('DOMContentLoaded', () => {
+  fetchData();
+  setupEventListeners();
+});
+
+function fetchData() {
+  fetch('getCertificate.php')
+    .then(res => res.json())
+    .then(data => {
+      sampleData = data;
+      currentState.totalItems = sampleData.length;
+      renderTable();
+    })
+    .catch(err => console.error('Fetch Error:', err));
+}
+
+function setupEventListeners() {
+  document.getElementById('searchInput').addEventListener('input', e => {
+    currentState.searchQuery = e.target.value;
+    currentState.page = 1;
+    renderTable();
   });
 
-  function renderTable() {
-    // Filter and sort data based on current state
-    let filteredData = filterData(sampleData);
-    filteredData = sortData(filteredData);
+  document.getElementById('startDate').addEventListener('change', e => {
+    currentState.dateRange.start = e.target.value;
+    currentState.page = 1;
+    renderTable();
+  });
 
-    // Update totalItems for pagination info
-    currentState.totalItems = filteredData.length;
+  document.getElementById('endDate').addEventListener('change', e => {
+    currentState.dateRange.end = e.target.value;
+    currentState.page = 1;
+    renderTable();
+  });
 
-    // Paginate data
-    const paginatedData = paginateData(filteredData);
+  document.getElementById('dataType').addEventListener('change', e => {
+    currentState.dataType = e.target.value;
+    currentState.page = 1;
+    renderTable();
+  });
 
-    // Update table
-    const tbody = document.getElementById('dataBody');
-    tbody.innerHTML = '';
+  document.getElementById('statusFilter').addEventListener('change', e => {
+    currentState.statusFilter = e.target.value;
+    currentState.page = 1;
+    renderTable();
+  });
 
-    paginatedData.forEach(item => {
-      const row = document.createElement('tr');
+  document.getElementById('pageSize').addEventListener('change', e => {
+    currentState.pageSize = parseInt(e.target.value);
+    currentState.page = 1;
+    renderTable();
+  });
 
-      // Determine status class
-      const statusClass = `badge-${item.status}`;
-      const typeDisplay = {
-        'birth': 'Birth Certificate',
-        'marriage': 'Marriage Certificate',
-        'death': 'Death Certificate',
-        'cenomar': 'Cenomar Certificate',
-        'cenodeath': 'Cenodeath Certificate'
-      }[item.type] || item.type;
+  document.getElementById('fetchBtn').addEventListener('click', () => {
+    fetchData();
+  });
 
-      row.innerHTML = `
-        <td>${item.id}</td>
-        <td>${item.name}</td>
-        <td>${typeDisplay}</td>
-        <td>${formatDate(item.date)}</td>
-        <td><span class="badge ${statusClass}">${capitalizeFirstLetter(item.status)}</span></td>
-        <td>
-          <button class="action-btn action-btn-view" data-id="${item.id}" data-action="view">
-            <i class="fas fa-eye"></i> View
-          </button>
-          <button class="action-btn action-btn-approve" data-id="${item.id}" data-action="approve">
-            <i class="fas fa-check"></i> Approve
-          </button>
-          <button class="action-btn action-btn-reject" data-id="${item.id}" data-action="reject">
-            <i class="fas fa-times"></i> Reject
-          </button>
-        </td>
-      `;
+  // Pagination buttons
+  document.getElementById('firstPage').addEventListener('click', () => {
+    currentState.page = 1;
+    renderTable();
+  });
 
-      tbody.appendChild(row);
+  document.getElementById('prevPage').addEventListener('click', () => {
+    if (currentState.page > 1) currentState.page--;
+    renderTable();
+  });
+
+  document.getElementById('nextPage').addEventListener('click', () => {
+    const maxPage = Math.ceil(currentState.totalItems / currentState.pageSize);
+    if (currentState.page < maxPage) currentState.page++;
+    renderTable();
+  });
+
+  document.getElementById('lastPage').addEventListener('click', () => {
+    currentState.page = Math.ceil(currentState.totalItems / currentState.pageSize);
+    renderTable();
+  });
+
+  // Column sorting
+  document.querySelectorAll('th').forEach(th => {
+    th.addEventListener('click', () => {
+      const column = th.innerText.trim().toLowerCase();
+      if (['id', 'name', 'certificate type', 'date', 'status'].includes(column)) {
+        const key = column === 'certificate type' ? 'type' : column === 'name' ? 'username' : column;
+        currentState.sortColumn = key;
+        currentState.sortDirection = currentState.sortDirection === 'asc' ? 'desc' : 'asc';
+        renderTable();
+      }
     });
+  });
+}
 
-    // Update pagination info
-    updatePaginationInfo(currentState.totalItems);
-  }
+function renderTable() {
+  let filteredData = filterData(sampleData);
+  filteredData = sortData(filteredData);
+  currentState.totalItems = filteredData.length;
 
-  // The rest of your helper functions (filterData, sortData, paginateData, updatePaginationInfo, setupEventListeners, formatDate, capitalizeFirstLetter) 
-  // remain the same, just make sure they are inside this script tag
+  const paginatedData = paginateData(filteredData);
+  const tbody = document.getElementById('dataBody');
+  tbody.innerHTML = '';
 
-  // For example:
-  function filterData(data) {
-    return data.filter(item => {
-      const matchesSearch = currentState.searchQuery === '' ||
-        item.name.toLowerCase().includes(currentState.searchQuery.toLowerCase()) ||
-        item.id.toString().includes(currentState.searchQuery) ||
-        item.type.toLowerCase().includes(currentState.searchQuery.toLowerCase());
+  paginatedData.forEach(item => {
+    const row = document.createElement('tr');
+    const statusClass = `badge-${item.status}`;
+    const typeDisplay = {
+      'birth': 'Birth Certificate',
+      'marriage': 'Marriage Certificate',
+      'death': 'Death Certificate',
+      'cenomar': 'Cenomar Certificate',
+      'cenodeath': 'Cenodeath Certificate'
+    }[item.type] || item.type;
 
-      const itemDate = new Date(item.date);
-      const matchesDate = !currentState.dateRange.start ||
-        (itemDate >= new Date(currentState.dateRange.start) &&
-          itemDate <= new Date(currentState.dateRange.end));
+    row.innerHTML = `
+      <td>${item.id}</td>
+      <td>${item.username}</td>
+      <td>${typeDisplay}</td>
+      <td>${formatDate(item.date)}</td>
+      <td><span class="badge ${statusClass}">${capitalizeFirstLetter(item.status)}</span></td>
+      <td>
+        <button class="action-btn action-btn-view" data-id="${item.id}" data-action="view">
+          <i class="fas fa-eye"></i> View
+        </button>
+        <button class="action-btn action-btn-approve" data-id="${item.id}" data-action="approve">
+          <i class="fas fa-check"></i> Approve
+        </button>
+        <button class="action-btn action-btn-reject" data-id="${item.id}" data-action="reject">
+          <i class="fas fa-times"></i> Reject
+        </button>
+      </td>
+    `;
+    tbody.appendChild(row);
+  });
 
-      const matchesType = currentState.dataType === 'all' ||
-        item.type === currentState.dataType;
+  updatePaginationInfo(currentState.totalItems);
+}
 
-      const matchesStatus = currentState.statusFilter === 'all' ||
-        item.status === currentState.statusFilter;
+function filterData(data) {
+  return data.filter(item => {
+    const matchesSearch = currentState.searchQuery === '' ||
+      item.username.toLowerCase().includes(currentState.searchQuery.toLowerCase()) ||
+      item.id.toString().includes(currentState.searchQuery) ||
+      item.type.toLowerCase().includes(currentState.searchQuery.toLowerCase());
 
-      return matchesSearch && matchesDate && matchesType && matchesStatus;
-    });
-  }
+    const itemDate = new Date(item.date);
+    const matchesDate = (!currentState.dateRange.start || itemDate >= new Date(currentState.dateRange.start)) &&
+                        (!currentState.dateRange.end || itemDate <= new Date(currentState.dateRange.end));
 
-  // (include all the rest of your functions here as before)
+    const matchesType = currentState.dataType === 'all' || item.type === currentState.dataType;
+    const matchesStatus = currentState.statusFilter === 'all' || item.status === currentState.statusFilter;
+
+    return matchesSearch && matchesDate && matchesType && matchesStatus;
+  });
+}
+
+function sortData(data) {
+  return data.sort((a, b) => {
+    const valA = a[currentState.sortColumn];
+    const valB = b[currentState.sortColumn];
+    if (valA < valB) return currentState.sortDirection === 'asc' ? -1 : 1;
+    if (valA > valB) return currentState.sortDirection === 'asc' ? 1 : -1;
+    return 0;
+  });
+}
+
+function paginateData(data) {
+  const start = (currentState.page - 1) * currentState.pageSize;
+  const end = start + currentState.pageSize;
+  return data.slice(start, end);
+}
+
+function updatePaginationInfo(total) {
+  const startItem = (currentState.page - 1) * currentState.pageSize + 1;
+  const endItem = Math.min(startItem + currentState.pageSize - 1, total);
+  document.getElementById('startItem').textContent = total === 0 ? 0 : startItem;
+  document.getElementById('endItem').textContent = endItem;
+  document.getElementById('totalItems').textContent = total;
+}
+
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+}
+
+function capitalizeFirstLetter(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

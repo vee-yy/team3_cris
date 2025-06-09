@@ -484,7 +484,7 @@ $result_full = $stmt->get_result();
                                         <label for="birthNationality">Nationality</label>
                                         <select name="deathNationality" id="birthNationality">
                                             <option value="Select">-- Select --</option>
-                                            <option value="FIlipino">Filipino</option>
+                                            <option value="Filipino">Filipino</option>
                                             <option value="Foreigner">Foreigner</option>
                                         </select>
                                     </div>
@@ -503,7 +503,7 @@ $result_full = $stmt->get_result();
                         <br>          
                             <label for="deliveryOption">Delivery Options:</label>
                         <br>
-                            <select name="deatheliveryOption" id="deliveryOption">
+                            <select name="deathdeliveryOption" id="deliveryOption">
                                 <option value="">-- Select --</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="pickup">Pick-up</option>
@@ -574,7 +574,7 @@ $result_full = $stmt->get_result();
                                     <label for="cenomarNationality">Nationality</label>
                                     <select name="cenomarNationality" id="cenomarNationality">
                                         <option value="Select">-- Select --</option>
-                                        <option value="FIlipino">Filipino</option>
+                                        <option value="Filipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
                                     </select>
                                 </div>
@@ -691,7 +691,7 @@ $result_full = $stmt->get_result();
                                     <label for="cenodeathNationality">Nationality</label>
                                     <select name="cenodeathNationality" id="cenodeathNationality">
                                         <option value="Select">-- Select --</option>
-                                        <option value="FIlipino">Filipino</option>
+                                        <option value="Filipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
                                     </select>
                                 </div>
