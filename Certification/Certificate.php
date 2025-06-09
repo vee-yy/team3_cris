@@ -252,7 +252,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="birthDateOfBirth">Date of Birth</label>
-                                    <input type="date" id="birthDateOfBirth" name="birthDateOfBirth" />
+                                    <input type="date" id="birthDateOfBirth" name="birthDateOfBirth" placeholder="Date of Birth" />
                                 </div>
                                 <div class="input-group">
                                     <label for="birthPlaceOfBirth">Place of Birth</label>
@@ -264,7 +264,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="birthOrientation">Sexual Orientation</label>
-                                    <select name="birthOrientation" id="birthOrientation">
+                                    <select name="birthOrientation" id="birthOrientation" placeholder="Sex">
                                         <option value="Select">-- Select --</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -273,7 +273,7 @@ $result_full = $stmt->get_result();
                                 </div>
                                 <div class="input-group">
                                     <label for="birthNationality">Nationality</label>
-                                    <select name="birthNationality" id="birthNationality">
+                                    <select name="birthNationality" id="birthNationality" placeholder="Nationality">
                                         <option value="Select">-- Select --</option>
                                         <option value="FIlipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
@@ -320,7 +320,7 @@ $result_full = $stmt->get_result();
                         <br>          
                             <label for="deliveryOption">Delivery Options:</label>
                         <br>
-                            <select name="birthdeliveryOption" id="deliveryOption">
+                            <select name="birthdeliveryOption" id="deliveryOption" placeholder="Delivery Options">
                                 <option value="">-- Select --</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="pickup">Pick-up</option>
@@ -330,7 +330,7 @@ $result_full = $stmt->get_result();
 
 
                         <label for="birthPurpose">Purpose of the certification</label><br>
-                        <select name="birthPurpose" id="birthPurpose">
+                        <select name="birthPurpose" id="birthPurpose" placeholder="Purpose">
                             <option value="death_record">-- Select -- </option>
                             <option value="Proof of No Death Record">Proof of No Death Record</option>
                             <option value="Legal and Administrative Purposes">Legal and Administrative Purposes</option>
@@ -381,7 +381,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="marriageDateOfMarriage">Date of Marriage</label>
-                                    <input type="date" id="marriageDateOfMarriage" name="marriageDateOfMarriage" />
+                                    <input type="date" id="marriageDateOfMarriage" name="marriageDateOfMarriage" placeholder="Date of Marriage"/>
                                 </div>
 
                                 <div class="input-group">
@@ -394,7 +394,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="marriageWifeNationality">Wife's Nationality</label>
-                                    <select name="marriageWifeNationality" id="marriageWifeNationality">
+                                    <select name="marriageWifeNationality" id="marriageWifeNationality" placeholder="Wife's Nationality">
                                         <option value="">-- Select --</option>
                                         <option value="Filipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
@@ -403,7 +403,7 @@ $result_full = $stmt->get_result();
 
                                 <div class="input-group">
                                     <label for="marriageHusbandNationality">Husband's Nationality</label>
-                                    <select name="marriageHusbandNationality" id="marriageHusbandNationality">
+                                    <select name="marriageHusbandNationality" id="marriageHusbandNationality" placeholder="Husband's Nationality">
                                         <option value="">-- Select --</option>
                                         <option value="Filipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
@@ -419,7 +419,7 @@ $result_full = $stmt->get_result();
                         <br>          
                             <label for="deliveryOption">Delivery Options:</label>
                         <br>
-                            <select name="marriagedeliveryOption" id="deliveryOption">
+                            <select name="marriagedeliveryOption" id="deliveryOption" placeholder="Delivery Option">
                                 <option value="">-- Select --</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="pickup">Pick-up</option>
@@ -428,7 +428,7 @@ $result_full = $stmt->get_result();
 
 
                         <label for="marriagePurpose">Purpose of the certification</label><br>
-                        <select name="marriagePurpose" id="marriagePurpose">
+                        <select name="marriagePurpose" id="marriagePurpose" placeholder="Purpose">
                             <option value="">-- Select --</option>
                             <option value="proof_no_death_record">Proof of No Death Record</option>
                             <option value="legal_and_administrative_purposes">Legal and Administrative Purposes</option>
@@ -465,15 +465,15 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="birthofdeath">Date of Birth</label>
-                                    <input type="date" id="birthofdeath" name="birthofdeath" />
+                                    <input type="date" id="birthofdeath" name="birthofdeath" placeholder="Date of Birth" />
                                     <label for="deathDateOfDeath">Date of Death</label>
-                                    <input type="date" id="deathDateOfDeath" name="deathDateOfDeath" />
+                                    <input type="date" id="deathDateOfDeath" name="deathDateOfDeath" placeholder="Date of Death" />
                                 </div>
 
                                 <div class="input-row">
                                     <div class="input-group">
                                         <label for="birthOrientation">Sexual Orientation</label>
-                                        <select name="deathOrientation" id="birthOrientation">
+                                        <select name="deathOrientation" id="birthOrientation" placeholder="Sex">
                                             <option value="Select">-- Select --</option>
                                             <option value="male">Male</option>
                                             <option value="female">Female</option>
@@ -482,7 +482,7 @@ $result_full = $stmt->get_result();
                                     </div>
                                     <div class="input-group">
                                         <label for="birthNationality">Nationality</label>
-                                        <select name="deathNationality" id="birthNationality">
+                                        <select name="deathNationality" id="birthNationality" placeholder="Nationality">
                                             <option value="Select">-- Select --</option>
                                             <option value="Filipino">Filipino</option>
                                             <option value="Foreigner">Foreigner</option>
@@ -503,7 +503,7 @@ $result_full = $stmt->get_result();
                         <br>          
                             <label for="deliveryOption">Delivery Options:</label>
                         <br>
-                            <select name="deathdeliveryOption" id="deliveryOption">
+                            <select name="deathdeliveryOption" id="deliveryOption" placeholder="Delivery Option">
                                 <option value="">-- Select --</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="pickup">Pick-up</option>
@@ -511,7 +511,7 @@ $result_full = $stmt->get_result();
                         </div>
 
                         <label for="deathPurpose">Purpose of the certification</label><br>
-                        <select name="deathPurpose" id="deathPurpose">
+                        <select name="deathPurpose" id="deathPurpose" placeholder="Purpose">
                             <option value="">-- Select --</option>
                             <option value="proof_no_death_record">Proof of No Death Record</option>
                             <option value="legal_and_administrative_purposes">Legal and Administrative Purposes</option>
@@ -551,7 +551,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="cenomarDateOfBirth">Date of Birth</label>
-                                    <input type="date" id="cenomarDateOfBirth" name="cenomarDateOfBirth" />
+                                    <input type="date" id="cenomarDateOfBirth" name="cenomarDateOfBirth" placeholder="Date of Birth" />
                                 </div>
                                 <div class="input-group">
                                     <label for="cenomarPlaceOfBirth">Place of Birth</label>
@@ -563,7 +563,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="cenomarOrientation">Sexual Orientation</label>
-                                    <select name="cenomarOrientation" id="cenomarOrientation">
+                                    <select name="cenomarOrientation" id="cenomarOrientation" placeholder="Sex">
                                         <option value="Select">-- Select --</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -572,7 +572,7 @@ $result_full = $stmt->get_result();
                                 </div>
                                 <div class="input-group">
                                     <label for="cenomarNationality">Nationality</label>
-                                    <select name="cenomarNationality" id="cenomarNationality">
+                                    <select name="cenomarNationality" id="cenomarNationality" placeholder="Nationality">
                                         <option value="Select">-- Select --</option>
                                         <option value="Filipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
@@ -616,7 +616,7 @@ $result_full = $stmt->get_result();
                         <br>          
                             <label for="deliveryOption">Delivery Options:</label>
                         <br>
-                            <select name="cenomardeliveryOption" id="deliveryOption">
+                            <select name="cenomardeliveryOption" id="deliveryOption" placeholder="Delivery Option">
                                 <option value="">-- Select --</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="pickup">Pick-up</option>
@@ -629,7 +629,7 @@ $result_full = $stmt->get_result();
                         -->
 
                          <label for="cenomarPurpose">Purpose of the certification</label><br>
-                        <select name="cenomarPurpose" id="cenomarPurpose">
+                        <select name="cenomarPurpose" id="cenomarPurpose" placeholder="Purpose">
                             <option value="">-- Select --</option>
                             <option value="proof_no_death_record">Proof of No Death Record</option>
                             <option value="legal_and_administrative_purposes">Legal and Administrative Purposes</option>
@@ -668,7 +668,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="cenodeathDateOfBirth">Date of Birth</label>
-                                    <input type="date" id="cenodeathDateOfBirth" name="cenodeathDateOfBirth" />
+                                    <input type="date" id="cenodeathDateOfBirth" name="cenodeathDateOfBirth" placeholder="Date of Birth"/>
                                 </div>
                                 <div class="input-group">
                                     <label for="cenodeathPlaceOfBirth">Place of Birth</label>
@@ -680,7 +680,7 @@ $result_full = $stmt->get_result();
                             <div class="input-row">
                                 <div class="input-group">
                                     <label for="cenodeathOrientation">Sexual Orientation</label>
-                                    <select name="cenodeathOrientation" id="cenodeathOrientation">
+                                    <select name="cenodeathOrientation" id="cenodeathOrientation" placeholder="Sex">
                                         <option value="Select">-- Select --</option>
                                         <option value="male">Male</option>
                                         <option value="female">Female</option>
@@ -689,7 +689,7 @@ $result_full = $stmt->get_result();
                                 </div>
                                 <div class="input-group">
                                     <label for="cenodeathNationality">Nationality</label>
-                                    <select name="cenodeathNationality" id="cenodeathNationality">
+                                    <select name="cenodeathNationality" id="cenodeathNationality" placeholder="Nationality">
                                         <option value="Select">-- Select --</option>
                                         <option value="Filipino">Filipino</option>
                                         <option value="Foreigner">Foreigner</option>
@@ -735,7 +735,7 @@ $result_full = $stmt->get_result();
                         <br>          
                             <label for="deliveryOption">Delivery Options:</label>
                         <br>
-                            <select name="cenodeathdeliveryOption" id="deliveryOption">
+                            <select name="cenodeathdeliveryOption" id="deliveryOption" placeholder="Delivery Option">
                                 <option value="">-- Select --</option>
                                 <option value="delivery">Delivery</option>
                                 <option value="pickup">Pick-up</option>
@@ -748,7 +748,7 @@ $result_full = $stmt->get_result();
                         -->
 
                         <label for="cenodeathPurpose">Purpose of the certification</label>
-                        <select name="cenodeathPurpose" id="cenodeathPurpose">
+                        <select name="cenodeathPurpose" id="cenodeathPurpose" placeholder="Purpose">
                             <option value="">-- Select --</option>
                             <option value="proof_no_death_record">Proof of No Death Record</option>
                             <option value="legal_and_administrative_purposes">Legal and Administrative Purposes</option>
