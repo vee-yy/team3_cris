@@ -224,7 +224,7 @@ $result_full = $stmt->get_result();
     <!-- Popup -->
     <div class="popup-overlay" id="popupForm">
         <div class="popup-content">
-            <span class="close-btn" onclick="closeForm()">&times;</span>
+            <span class="close-btn" id="closeFormBtn">&times;</span>
             <h2 id="formTitle">Register</h2>
             <!-- Progress Bar -->
             <ul class="progressbar" id="progressbar">

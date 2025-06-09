@@ -186,9 +186,15 @@ function showPopupForm(type) {
     const section = document.getElementById(showId);
     if (section) section.style.display = 'block';
 
+    currentStep = 0;
     resetFormAndStepper();
 }
 
+function resetFormAndStepper() {
+    if (form) form.reset();
+    document.getElementById('reviewSummary').innerHTML = '';
+    showStep(currentStep);  
+}
 
 function closeForm() {
     const popup = document.getElementById('popupForm');
@@ -196,6 +202,34 @@ function closeForm() {
     certificateForm?.reset();
     resetFormAndStepper();
 }
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  const closeFormBtn = document.getElementById('closeFormBtn');
+
+  if (closeFormBtn) {
+    closeFormBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+
+      Swal.fire({
+        title: 'Do you really want to exit?',
+        text: 'Your changes will not be saved.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes',
+        cancelButtonText: 'Discard',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3b82f6'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          closeForm();
+        }
+      });
+    });
+  }
+});
+
+
 
 const form = document.getElementById('certificateForm');
 const steps = document.querySelectorAll('.form-step');
@@ -215,6 +249,43 @@ const sectionMap = {
     'Cenodeath Certificate': 'cenodeathFields'
 };
 
+document.addEventListener('DOMContentLoaded', () => {
+  const dateInputs = document.querySelectorAll('input[type="date"]');
+
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  const maxDate = `${year}-${month}-${day}`;
+
+  dateInputs.forEach(input => {
+    input.removeAttribute('min');        
+    input.max = maxDate;
+    input.addEventListener('keydown', e => e.preventDefault());
+    input.addEventListener('change', (e) => {
+      const selectedDate = new Date(e.target.value);
+      const todayCheck = new Date();
+      todayCheck.setHours(0, 0, 0, 0);
+
+      if (selectedDate > todayCheck) {
+        Swal.fire({
+          toast: true,
+          background: '#f8d7da',
+          icon: 'error',
+          title: 'Future dates are not allowed',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true
+        });
+
+        e.target.value = '';
+      }
+    });
+  });
+});
+
+
 //Function to reset the form and stepper
 function showStep(step) {
     steps.forEach((el, idx) => {
@@ -228,25 +299,35 @@ function showStep(step) {
 
 // Validate all visible inputs in the active certificate type section
 function validateStep1() {
-    const certType = document.getElementById('certificateType').value;
-    const sectionId = sectionMap[certType];
-    const section = document.getElementById(sectionId);
-    if (!section) return false;
+  const certType = document.getElementById('certificateType').value;
+  const sectionId = sectionMap[certType];
+  const section = document.getElementById(sectionId);
+  if (!section) return false;
 
-    const inputs = section.querySelectorAll('input[required], select[required], textarea[required]');
-    for (const input of inputs) {
-        if (!input.value.trim()) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Validation Error',
-                text: `Please fill out the required field: ${input.placeholder || input.name}`,
-                confirmButtonColor: '#3b82f6'
-            });
-            input.focus();
-            return false;
-        }
-    }
-    return true;
+const inputs = section.querySelectorAll('input, select, textarea');
+
+
+for (const input of inputs) {
+  const skipFields = ['Middle Name', 'Suffix', "Mother's Middle Name", "Father's Middle Name", 'Jr. Sr. III, IV'];
+  const identifier = input.placeholder;
+
+  if (skipFields.includes(identifier)) {
+    continue; 
+  }
+
+  if (!input.value.trim()) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Validation Error',
+      text: `Please fill out the required field: ${input.placeholder || input.name || input.id}`,
+      confirmButtonColor: '#3b82f6'
+    });
+    input.focus();
+    return false;
+  }
+}
+
+  return true;
 }
 
 //Generate the summary of inputs for the selected certificate type and download as PDF basta ayon jusko po

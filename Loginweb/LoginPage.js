@@ -29,7 +29,8 @@ document.getElementById('signupForm').addEventListener('submit', function (e) {
         .then(res => res.json())
         .then(data => {
             if (data.success) {
-                Swal.fire({ icon: 'success', title: 'Account Created' }).then(() => {
+                Swal.fire({ icon: 'success', title: 'Account Created', text: 'You can now log in with your credentials.', confirmButtonText: 'OK'
+                    }).then(() => {
                     toggleForms();
                     form.reset();
                 });
