@@ -103,6 +103,25 @@ function setupEventListeners() {
       }
     });
   });
+
+  // Event delegation for action buttons
+  document.addEventListener('click', (e) => {
+    const actionBtn = e.target.closest('.action-btn');
+    if (!actionBtn) return;
+    
+    const action = actionBtn.dataset.action;
+    const id = actionBtn.dataset.id;
+    
+    switch(action) {
+      case 'view':
+        viewCertificate(id, actionBtn.closest('tr').querySelector('td:nth-child(3)').textContent);
+        break;
+      case 'approve':
+      case 'reject':
+        updateCertificateStatus(id, action);
+        break;
+    }
+  });
 }
 
 function renderTable() {
@@ -198,6 +217,50 @@ function formatDate(dateStr) {
 
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function viewCertificate(id, type) {
+  // Convert the display type back to the internal type
+  const typeMap = {
+    'Birth Certificate': 'birth',
+    'Marriage Certificate': 'marriage',
+    'Death Certificate': 'death',
+    'Cenomar Certificate': 'cenomar',
+    'Cenodeath Certificate': 'cenodeath'
+  };
+  
+  const internalType = typeMap[type] || type;
+  window.location.href = `view_certificate.php?type=${internalType}&id=${id}`;
+}
+
+function updateCertificateStatus(id, action) {
+  if (!confirm(`Are you sure you want to ${action} this certificate?`)) {
+    return;
+  }
+
+  fetch('update_status.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      id: id,
+      action: action
+    })
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      alert(`Certificate ${action}d successfully!`);
+      fetchData(); // Refresh the table
+    } else {
+      alert(`Error: ${data.message || 'Failed to update status'}`);
+    }
+  })
+  .catch(error => {
+    console.error('Error:', error);
+    alert('An error occurred while updating the status');
+  });
 }
 
 function logout() {
