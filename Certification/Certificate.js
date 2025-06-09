@@ -98,7 +98,7 @@ function openHomePopup() {
 }
 
 function openAboutPopup() {
-    Swal.fire({ icon: 'info', title: 'About Us', text: 'This is the About Us section.' });
+window.location.href = '../AboutUs/AboutUs.html';
 }
 
 function openContactPopup() {
