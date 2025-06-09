@@ -2,7 +2,7 @@
 session_start();
 include "../connect.php";
 
-if (!isset($_SESSION['user_id'])) {
+if (!isset($_SESSION['user_id'])&& !isset($_SESSION['isAdmin'])) {
     echo "Please log in to view your records.";
     exit;
 }

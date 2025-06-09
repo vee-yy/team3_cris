@@ -1,41 +1,46 @@
 <?php
 header('Content-Type: application/json');
 
-// DB credentials
-$host = "localhost";
-$user = "root"; 
-$pass = "";
-$dbname = "civil_registry"; 
+// Include the main connection file to use the same connection settings
+include '../connect.php';
 
-$conn = new mysqli($host, $user, $pass, $dbname);
 if ($conn->connect_error) {
-  http_response_code(500);
-  echo json_encode(['error' => 'Database connection failed']);
-  exit;
+    http_response_code(500);
+    echo json_encode(['error' => 'Database connection failed: ' . $conn->connect_error]);
+    exit;
 }
 
-// Helper to fetch certificate data with JOIN to get username
+// Helper to fetch certificate data with LEFT JOIN to handle missing users
 function fetchCertificates($conn, $table, $type) {
-  $sql = "SELECT $table.id, users.username, $table.created_at, $table.status 
-          FROM $table 
-          INNER JOIN users ON $table.user_id = users.id";
+    $sql = "SELECT 
+                $table.id, 
+                COALESCE(users.username, 'Unknown User') as username, 
+                $table.created_at, 
+                COALESCE($table.status, 'Pending') as status
+            FROM $table 
+            LEFT JOIN users ON $table.user_id = users.id";
 
-  $result = $conn->query($sql);
-  $certs = [];  
+    $result = $conn->query($sql);
+    $certs = [];
 
-  if ($result && $result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-      $certs[] = [
-        'id' => $row['id'],
-        'username' => $row['username'],     // This now correctly shows the account username
-        'type' => $type,
-        'date' => $row['created_at'],
-        'status' => $row['status']
-      ];
+    if ($result === false) {
+        // Log the error for debugging
+        error_log("Error in query for $table: " . $conn->error);
+        return [];
     }
-  }
 
-  return $certs;
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $certs[] = [
+                'id' => $row['id'],
+                'username' => $row['username'],
+                'type' => $type,
+                'date' => $row['created_at'],
+                'status' => $row['status']
+            ];
+        }
+    }
+    return $certs;
 }
 
 // Fetch from all certificate tables

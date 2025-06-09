@@ -199,3 +199,14 @@ function formatDate(dateStr) {
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+function logout() {
+  sessionStorage.removeItem("isAdmin");
+  window.location.href = 'AdminLogin.html';
+}
+
+/*
+function website() {
+  window.location.href = "../Certification/Certificate.php";
+} 
+*/

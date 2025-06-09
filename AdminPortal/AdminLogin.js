@@ -28,27 +28,33 @@ loginForm.addEventListener('submit', function (e) {
     errorMessage.style.display = 'none';
     successMessage.style.display = 'none';
 
-    if (username === ADMIN_CREDENTIALS.username && passwordValue === ADMIN_CREDENTIALS.password) {
-        successMessage.style.display = 'block';
-        successMessage.textContent = "Login successful! Redirecting...";
-
-        sessionStorage.setItem("isAdmin", "true");
-
-        setTimeout(() => {
-            window.location.href = 'AdminDashboard.html';
-        }, 1000);
-
-        return; 
-    }
-
-    errorMessage.style.display = 'block';
-    errorMessage.textContent = "Incorrect username or password.";
-    loginBtn.disabled = false;
-    loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
-
-    document.getElementById('password').value = '';
-    document.getElementById('password').focus();
+    fetch('AdminLogin.php', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ username, password: passwordValue })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            successMessage.style.display = 'block';
+            successMessage.textContent = data.message;
+            setTimeout(() => {
+                window.location.href = 'AdminDashboard.html';
+            }, 1000);
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(err => {
+        errorMessage.style.display = 'block';
+        errorMessage.textContent = err.message;
+        loginBtn.disabled = false;
+        loginBtn.innerHTML = '<i class="fas fa-sign-in-alt"></i> Login';
+    });
 });
+
 
 document.getElementById('username').addEventListener('input', hideError);
 document.getElementById('password').addEventListener('input', hideError);
