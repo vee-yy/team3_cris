@@ -18,7 +18,13 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function fetchData() {
-  fetch('getCertificate.php')
+  // Build query parameters
+  const params = new URLSearchParams();
+  if (currentState.statusFilter !== 'all') {
+    params.append('status', currentState.statusFilter.toUpperCase());
+  }
+
+  fetch(`getCertificate.php?${params.toString()}`)
     .then(res => res.json())
     .then(data => {
       sampleData = data;
@@ -177,12 +183,11 @@ function filterData(data) {
 
     const itemDate = new Date(item.date);
     const matchesDate = (!currentState.dateRange.start || itemDate >= new Date(currentState.dateRange.start)) &&
-                        (!currentState.dateRange.end || itemDate <= new Date(currentState.dateRange.end));
+                       (!currentState.dateRange.end || itemDate <= new Date(currentState.dateRange.end));
 
     const matchesType = currentState.dataType === 'all' || item.type === currentState.dataType;
-    const matchesStatus = currentState.statusFilter === 'all' || item.status === currentState.statusFilter;
 
-    return matchesSearch && matchesDate && matchesType && matchesStatus;
+    return matchesSearch && matchesDate && matchesType;
   });
 }
 
