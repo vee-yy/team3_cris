@@ -45,7 +45,7 @@ $result_full = $stmt->get_result();
       <img src="../resources/Logo.png" alt="Logo" class="logo">
     </div>
 
-        <!-- Search Bar -->
+    <!-- Search Bar -->
     <div class="search-tab">
       <div class="search-cluster">
         <input class="searchInput" type="text" placeholder="Search your input Register Certificate...">
@@ -92,15 +92,17 @@ $result_full = $stmt->get_result();
       </div>
     </nav>
   </div>
-    </header>
-    <div class="title">
-        <h1> <strong> Registration Portal for Vital Records </strong>
-        </h1>
-        <p>
-            Register and manage your vital records with our secure and efficient certificate services.
-                         <p>&copy; <span id="year"></span> CRIS. All rights reserved.</p>
-        </p>
-    </div>
+</header>
+
+<div class="title">
+    <h1> <strong> Registration Portal for Vital Records </strong> 
+    </h1>
+    <p>
+    Register and manage your vital records with our secure and efficient certificate services.
+                <p>&copy; <span id="year"></span> CRIS. All rights reserved.</p>
+
+    </p>
+</div>
 
     <div class="card-container">
         <!-- Birth Certificate -->
