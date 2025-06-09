@@ -285,28 +285,47 @@ prevBtn.addEventListener('click', () => {
     showStep(currentStep);
 });
 
+downloadBtn.type = 'button';
+
 downloadBtn.addEventListener('click', () => {
+  const certType = document.getElementById('certificateType').value;
+  const sectionId = sectionMap[certType];
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  // Update the PDF template with the certificate type
+  document.getElementById('pdfCertType').textContent = certType;
+  const pdfDetails = document.getElementById('pdfDetails');
+  pdfDetails.innerHTML = '';
+
+  // Add all form fields to the PDF template
+  section.querySelectorAll('input, textarea, select').forEach(input => {
+    const label = input.getAttribute('placeholder') || input.name || input.id || 'Field';
+    const value = input.value.trim().toUpperCase() || '<em>Not provided</em>';
+    pdfDetails.innerHTML += `
+      <p style="margin: 4px 0;">
+        <strong>${label}:</strong> ${value}
+      </p>`;
+  });
+
+  // Show the template right before capturing
+  const template = document.getElementById('pdfTemplate');
+  template.style.display = 'block'; 
+
+  // Convert the template to PDF
+  html2canvas(template).then(canvas => {
+    const imgData = canvas.toDataURL('image/png');
     const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    const pdf = new jsPDF('p', 'pt', 'a4');
+    const width = pdf.internal.pageSize.getWidth();
+    const height = (canvas.height * width) / canvas.width;
 
-    const certType = document.getElementById('certificateType').value;
-    const sectionId = sectionMap[certType];
-    const section = document.getElementById(sectionId);
-    if (!section) return;
-
-    doc.setFontSize(14);
-    doc.text('Certificate Registration Summary', 10, 10);
-    doc.text(`Certificate Type: ${certType}`, 10, 20);
-
-    let y = 30;
-    section.querySelectorAll('input, textarea, select').forEach(input => {
-        const label = input.getAttribute('placeholder') || input.name || input.id || 'Field';
-        const value = input.value.trim() || 'Not provided';
-        doc.text(`${label}: ${value}`, 10, y);
-        y += 10;
-    });
-
-    doc.save('registration-summary.pdf');
+    pdf.addImage(imgData, 'PNG', 0, 0, width, height);
+    pdf.save('certificate-summary.pdf');
+    
+    // Hide the template again after generating PDF
+    template.style.display = 'none';
+  });
 });
 
 let registrationCount = 0;

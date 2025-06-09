@@ -821,6 +821,15 @@ $result_full = $stmt->get_result();
         </div>
     </div>
 
+<div id="pdfTemplate">
+  <div class="pdf-body">
+    <h2>Certificate Registration Summary</h2>
+    <p style="font-size: 18px;"><strong>CERTIFICATE TYPE: </strong> <span id="pdfCertType"></span></p>
+    <div id="pdfDetails"></div>
+  </div>
+  <p class="pdf-note">* This is a system-generated summary. Please keep it for your records.</p>
+</div>
+
     <script src="Certificate.js"> </script>
 </body>
 
